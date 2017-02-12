@@ -145,6 +145,8 @@ namespace Assets.Scripts
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (transform.parent.tag == "cardHolder")
+                _card.ReturnToParent();
             endTime = Time.time;
             holdTime = endTime - startTime;
             if (holdTime > MaxTime && ItemBeingDragged == null)
@@ -160,5 +162,6 @@ namespace Assets.Scripts
             }
 
         }
+
     }
 }

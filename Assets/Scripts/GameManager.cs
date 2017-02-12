@@ -32,7 +32,7 @@ namespace Assets.Scripts
 
         //>>>>MANAGERS<<<<
         private static GameManager _instance;
-            //Static instance of GameManager which allows it to be accessed by any other script.
+        //Static instance of GameManager which allows it to be accessed by any other script.
 
         public static GameManager Instance
         {
@@ -157,7 +157,7 @@ namespace Assets.Scripts
         {
             SetFont();
             Failed = false;
-          
+
             Victory = false;
             _dysFontHasBeenEnabled = false;
             CalculateNextLevel();
@@ -185,6 +185,10 @@ namespace Assets.Scripts
                     break;
 
                 case "Intro":
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 1, 10);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+
                     Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen())
                         DialogueManager.OpenDialogue("Introduction/Introduction");
@@ -194,6 +198,11 @@ namespace Assets.Scripts
                     break;
 
                 case "Level0":
+
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 2, 10);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
@@ -204,6 +213,10 @@ namespace Assets.Scripts
 
                     break;
                 case "Level1":
+
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 4, 10);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
@@ -211,6 +224,10 @@ namespace Assets.Scripts
                     LoadGameManagers();
                     break;
                 case "Level2":
+
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 6, 10);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
@@ -218,6 +235,9 @@ namespace Assets.Scripts
                     LoadGameManagers();
                     break;
                 case "Level3":
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 8, 10);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
@@ -226,6 +246,9 @@ namespace Assets.Scripts
                     Quiz = GameObject.FindGameObjectWithTag("Quiz").GetComponent<Quiz>();
                     break;
                 case "Quiz1":
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 10, 11);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue("Quiz1/Introduction");
@@ -235,6 +258,9 @@ namespace Assets.Scripts
                     QuizManager = GameObject.FindGameObjectWithTag("QuizManager").GetComponent<QuizManager>();
                     break;
                 case "Quiz2":
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 11, 11);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue("Quiz2/Introduction");
@@ -332,15 +358,15 @@ namespace Assets.Scripts
                     if (DialogueManager.IsOpen() == false && Victory)
                     {
                         Victory = false;
-                        StartCoroutine(LoadNextLevel("Menu"));
+                        StartCoroutine(EndGame());
                         Fade.SetBool("Open", true);
 
                     }
 
                     break;
             }
-          
-        
+
+
         }
 
         //Checks the current generations genetic variety
@@ -458,14 +484,26 @@ namespace Assets.Scripts
             switch (CurrentLevel)
             {
                 case "Level0":
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 3, 11);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     return puppy.ReturnTrainability() > 60 && puppy.ReturnScent() > 60;
                 case "Level1":
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 5, 11);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     return puppy.ReturnEndurance() > 70 && puppy.ReturnSize() > 60 && puppy.ReturnBark() > 60 &&
                            puppy.ReturnScent() > 60;
                 case "Level2":
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 7, 11);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     return puppy.ReturnTrainability() > 80 && puppy.ReturnSight() > 70 && puppy.ReturnDemeanor() > 60 &&
                            puppy.ReturnSize() > 60;
                 case "Level3":
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 9, 11);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     return puppy.ReturnTrainability() > 80 && puppy.ReturnEndurance() > 60 && puppy.ReturnScent() > 90 &&
                            puppy.ReturnDemeanor() > 80;
                 default:
@@ -518,7 +556,7 @@ namespace Assets.Scripts
             StopAllCoroutines();
         }
 
-        //Show polaroids
+       
         private IEnumerator LoadNextLevel(string filepath)
         {
             yield return new WaitForSeconds(3);
@@ -526,12 +564,26 @@ namespace Assets.Scripts
             StopAllCoroutines();
         }
 
-        //Show polaroids
+      
         private IEnumerator LoadLevel()
         {
             yield return new WaitForSeconds(3);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             StopAllCoroutines();
+        }
+        //Show polaroids
+        private IEnumerator EndGame()
+        {
+            yield return new WaitForSeconds(3);
+            LOLSDK.Instance.CompleteGame();
+            StopAllCoroutines();
+        }
+
+
+        public void SetDiversity()
+        {
+            int max = GeneticVarience.value;
+            GeneticVarience.value = (int)(max - GenerationManager.ReturnFutureGeneration().CalculateTotalDiversity());
         }
     }
 

@@ -25,11 +25,10 @@ namespace Assets.Scripts
         [SerializeField] private int _bark;
         [SerializeField]private List<GameObject> _siblings = new List<GameObject>(2);
         [SerializeField]private List<GameObject> _halfsiblings = new List<GameObject>(2);
-
+        private Generation _generation;
         private readonly GameObject[] _parents = new GameObject[2];
         [SerializeField]private string[] _initialParents = new string[2];
-        [SerializeField]
-        private bool _startingGeneration;
+        [SerializeField]private bool _startingGeneration;
 
 
         private readonly string[] _maleDogNames = {"Jeffrey", "Bruno", "Bob", "Max", "Slayer", "Gino", "George", "Scooter", "Spots", "Brutus", "Ziggy", "Ben", "Charlie",
@@ -54,7 +53,7 @@ namespace Assets.Scripts
         void Start()
         {
 
-
+            _generation = GetComponentInParent<Generation>();
             if (string.IsNullOrEmpty(_dogName))
             {
                 SetName();
@@ -181,26 +180,31 @@ namespace Assets.Scripts
             return _parents;
         }
 
+        public void SetGeneration(Generation generation)
+        {
+            _generation = generation;
+        }
 
         public void FindSiblings()
         {
-            if (_startingGeneration) return;
-            if (_parents[0] == null) return;
-            GameObject[] allDogs = GameObject.FindGameObjectsWithTag("Dog");
-
-            for (int i = 0; i < allDogs.Length; i++)
+        
+            if (_startingGeneration || _generation == null) return;
+            _siblings.Clear();
+            _halfsiblings.Clear();
+            for (int i = 0; i < _generation._generationDogs.Length; i++)
             {
-                GameObject dog = allDogs[i];
+                Dog dog = _generation._generationDogs[i];
                 //Skip this dog, it cant be its own sibling!
-                if (dog == gameObject || dog.transform.parent.tag =="PuppySlots") continue;
-
+                if (dog == this || dog.transform.parent.tag =="PuppySlots") continue;
+               
+           
                 int counter = 0;
 
-                if (dog.GetComponent<Dog>().ReturnParents()[0] == _parents[0] || dog.GetComponent<Dog>().ReturnParents()[0] == _parents[1])
+                if (dog.ReturnParents()[0] == _parents[0] || dog.ReturnParents()[0] == _parents[1])
                 {
                     counter++;
                 }
-                if (dog.GetComponent<Dog>().ReturnParents()[1] == _parents[0] || dog.GetComponent<Dog>().ReturnParents()[1] == _parents[1])
+                if (dog.ReturnParents()[1] == _parents[0] || dog.ReturnParents()[1] == _parents[1])
                 {
                     counter++;
 
@@ -208,12 +212,12 @@ namespace Assets.Scripts
                 switch (counter)
                 {
                     case 1:
-                        if(_halfsiblings.Contains(dog)) return;
-                        _halfsiblings.Add(dog);
+                        if(_halfsiblings.Contains(dog.gameObject)) return;
+                        _halfsiblings.Add(dog.gameObject);
                         break;
                     case 2:
-                        if (_siblings.Contains(dog)) return;
-                        _siblings.Add(dog);
+                        if (_siblings.Contains(dog.gameObject)) return;
+                        _siblings.Add(dog.gameObject);
                         break;
                     default:
                         continue;
@@ -516,6 +520,11 @@ namespace Assets.Scripts
         public static int Clamp(int value, int min, int max)
         {
             return (value <= min) ? min : (value >= max) ? max : value;
+        }
+
+        public float CheckDiversity()
+        {
+             return (float)(_halfsiblings.Count*2.5)/2 + (_siblings.Count*5)/2f;
         }
     }
 }

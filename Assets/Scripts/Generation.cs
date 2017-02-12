@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Boo.Lang;
 using UnityEngine;
 using UnityEngine.UI;
 using LoLSDK;
@@ -9,7 +10,7 @@ namespace Assets.Scripts
     {
        [SerializeField]private CardSlot[] _cardSlots;
       private GameObject _cardPrefab;
-        private Dog[] _generationDogs;
+        [SerializeField]public Dog[] _generationDogs;
 
         public bool StartingGeneration;
         // Use this for initialization
@@ -19,8 +20,8 @@ namespace Assets.Scripts
             _cardPrefab = GameManager.Instance.ChosenCardPrefab;
             _cardSlots = new CardSlot[transform.childCount];
             _cardSlots = transform.GetComponentsInChildren<CardSlot>();
-            
 
+            _generationDogs = GetComponentsInChildren<Dog>();
             //Initial the starting generation
             if (!StartingGeneration) return;
             InitialiseGeneration();
@@ -60,12 +61,14 @@ namespace Assets.Scripts
             {
                 if (!_cardSlots[i].Item)
                 {
+                    newCard.GetComponent<Dog>().SetGeneration(this);
                     newCard.transform.SetParent(_cardSlots[i].transform);
                     newCard.transform.localScale = new Vector3(newCard.transform.GetComponentInParent<CardSlot>().Scale,newCard.transform.GetComponentInParent<CardSlot>().Scale, 1);
                     break;
                 }
             }
-            UpdateGeneration();
+            FindSiblings();
+            _generationDogs = GetComponentsInChildren<Dog>();
         }
 
         //Return an array containing all cardslots
@@ -103,13 +106,20 @@ namespace Assets.Scripts
         }
 
 
-        public void UpdateGeneration()
+        public void FindSiblings()
         {
             for (int i = 0; i < _cardSlots.Length; i++)
             {
                 if (_cardSlots[i].Item)
+                {
                     _cardSlots[i].Item.GetComponent<Dog>().FindSiblings();
+                }
             }
+        }
+
+        public float CalculateTotalDiversity()
+        {
+            return _generationDogs.Sum(dog => dog.CheckDiversity());
         }
     }
 }

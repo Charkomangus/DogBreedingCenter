@@ -46,6 +46,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         private void Update()
         {
+         
             if (transform.parent.tag == "breedingSlotHolder" || transform.parent.tag == "Holder" ||
                 transform.parent.tag == "cardHolder" || transform.parent.tag == "cardReviewSlot" ||
                 transform.parent.tag == "FinalDogSlot")
@@ -143,7 +144,7 @@ namespace Assets.Scripts
         //Set this card as the chosen card of the CardReview
         public void OpenCardReview()
         {
-            GameManager.Instance.SoundManager.PlaySoundEffect(Random.Range(0, 2) == 0? "Sound/Bark.wav": "Sound/doubleBark.wav");
+            GameManager.Instance.SoundManager.PlaySoundEffect(Random.Range(0, 2) == 0? "Sound/Bark.mp3": "Sound/doubleBark.mp3");
 
             GameManager.Instance.SideBar.SetBool("Open", false);
             GameManager.Instance.CardReview.GetComponent<Animator>().SetBool("Open", true);
@@ -160,6 +161,7 @@ namespace Assets.Scripts
 
 
         }
+
 
         //Choose apropriate image to show dog
         public void SetImage(Sprite image)
@@ -212,5 +214,7 @@ namespace Assets.Scripts
             }
 
         }
+
+      
     }
 }

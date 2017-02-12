@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using LoLSDK;
@@ -13,6 +14,7 @@ namespace Assets.Scripts
         [SerializeField] private Generation _nextGeneration;
         private bool failed;
         private int _generationIndex;
+    
 
 
         // Use this for initialization
@@ -85,7 +87,7 @@ namespace Assets.Scripts
             
         }
 
-
+       
 
     }
 }

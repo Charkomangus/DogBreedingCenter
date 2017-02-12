@@ -48,7 +48,8 @@ namespace Assets.Scripts
             if (_itemBeingDragged) return;
             _endTime = Time.time;
             _holdTime = _endTime - _startTime;
-            Debug.Log("Hold:" + _holdTime);
+         
+
             if (_holdTime > MaxTime)
             {
                 if (_card != null)

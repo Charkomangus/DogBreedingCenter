@@ -71,21 +71,25 @@ namespace Assets.Scripts
             _futureGeneration = GameManager.Instance.GenerationManager.ReturnFutureGeneration(); 
             if (_futureGeneration.ReturnAvailableSlot() != null)
             {
+                
                 _futureGeneration.AddCard(chosenPuppy);
+                _futureGeneration.FindSiblings();
             }
             else
             {
                 GameManager.Instance.GenerationManager.UpdateGeneration();
                 _futureGeneration = GameManager.Instance.GenerationManager.ReturnFutureGeneration();
                 _futureGeneration.AddCard(chosenPuppy);
-                _futureGeneration.UpdateGeneration();
+                _futureGeneration.FindSiblings();
             }
             for (int i = 0; i < _slots.Length; i++)
             {
                 if(_slots[i].Item)
                     Destroy(_slots[i].Item);
             }
+            GameManager.Instance.SetDiversity();
             ClosePuppyManager();
+
         }
 
 
