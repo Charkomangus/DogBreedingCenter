@@ -1,0 +1,1 @@
+0Much better. Keep in mind that we want a dog that will inherit the best after both parents not after just one. 

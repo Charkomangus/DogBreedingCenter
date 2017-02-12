@@ -1,0 +1,4 @@
+REQUIREMENTS:
+Trainability:           8/10
+Sight:                    7/10
+Demeanor:           6/10
