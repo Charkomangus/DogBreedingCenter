@@ -19,7 +19,7 @@ namespace Assets.Scripts
         [SerializeField]private int _hearing ;
         [SerializeField]private int _demeanor;
         [SerializeField]private int _sight;
-        [SerializeField] private int _trainability;
+        [SerializeField] private int _Intelligence ;
         [SerializeField] private int _hairLength;
         [SerializeField] private int _strength;
         [SerializeField] private int _bark;
@@ -81,7 +81,7 @@ namespace Assets.Scripts
             _hearing = Random.Range(0, 100);
             _demeanor = Random.Range(0, 100);
             _sight = Random.Range(0, 100);
-            _trainability = Random.Range(0, 100);
+            _Intelligence  = Random.Range(0, 100);
             _hairLength = Random.Range(0, 100);
             _strength = Random.Range(0, 100);
             _bark = Random.Range(0, 100);
@@ -229,7 +229,7 @@ namespace Assets.Scripts
         //Return parents names
         public string ReturnParentNames()
         {
-            if (GameManager.Instance.GenerationManager.ReturnCurrentGeneration().StartingGeneration || _parents[0] == null || _parents[1] == null)
+            if (_parents[0] == null || _parents[1] == null)
                 return _initialParents[0] + " and " + _initialParents[1];
             return _parents[0].GetComponent<Dog>().ReturnName() + " and " + _parents[1].GetComponent<Dog>().ReturnName();
         }
@@ -489,24 +489,24 @@ namespace Assets.Scripts
             return _hairLength <= 66 ? "Medium" : "Long";
         }
 
-        //Trainability Low - Medium - High
-        public int ReturnTrainability()
+        //Intelligence  Low - Medium - High
+        public int ReturnIntelligence()
         {
-            return _trainability;
+            return _Intelligence ;
         }
 
-        public void SetTrainability(int trainability)
+        public void SetIntelligence(int Intelligence)
         {
-            _trainability = trainability;
+            _Intelligence  = Intelligence ;
         }
 
-        public string ReturnTrainabilityDescription()
+        public string ReturnIntelligenceDescription()
         {
-            if (_trainability <= 30)
+            if (_Intelligence  <= 30)
                 return "Low";
-            if (_trainability <= 60)
+            if (_Intelligence  <= 60)
                 return "Medium";
-            if (_trainability <= 90)
+            if (_Intelligence  <= 90)
                 return "High";
             return "Genius";
         }

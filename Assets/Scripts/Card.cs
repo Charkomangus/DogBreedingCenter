@@ -79,8 +79,8 @@ namespace Assets.Scripts
            
             if (_dog.ReturnDemeanor() >= 60)
                 statsNumbersBuilder.Append(_dog.ReturnDemeanor() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnTrainability() >= 60)
-                statsNumbersBuilder.Append(_dog.ReturnTrainability() / 10 + "/10" + Environment.NewLine);
+            if (_dog.ReturnIntelligence () >= 60)
+                statsNumbersBuilder.Append(_dog.ReturnIntelligence () / 10 + "/10" + Environment.NewLine);
             if (_dog.ReturnEndurance() >= 60)
                 statsNumbersBuilder.Append(_dog.ReturnEndurance() / 10 + "/10" + Environment.NewLine);
             if (_dog.ReturnScent() >= 60)
@@ -97,23 +97,22 @@ namespace Assets.Scripts
         public string SetStats()
         {
             System.Text.StringBuilder statsBuilder = new System.Text.StringBuilder();
-           
-            if (_dog.ReturnDemeanor() >= 60)
-                statsBuilder.Append("Demeanor:" + Environment.NewLine);
-            if (_dog.ReturnTrainability() >= 60)
-                statsBuilder.Append("Trainability:" + Environment.NewLine);
+
+            if (_dog.ReturnIntelligence() >= 60)
+                statsBuilder.Append("Intelligence :" + Environment.NewLine);
             if (_dog.ReturnEndurance() >= 60)
                 statsBuilder.Append("Endurance:" + Environment.NewLine);
+            if (_dog.ReturnDemeanor() >= 60)
+                statsBuilder.Append("Demeanor:" + Environment.NewLine);
+            if (_dog.ReturnHearing() >= 60)
+                statsBuilder.Append("Hearing:" + Environment.NewLine);
             if (_dog.ReturnScent() >= 60)
                 statsBuilder.Append("Scent:" + Environment.NewLine);
             if (_dog.ReturnSight() >= 60)
                 statsBuilder.Append("Sight:" + Environment.NewLine);
-            if (_dog.ReturnHearing() >= 60)
-                statsBuilder.Append("Hearing:" + Environment.NewLine);
             if (_dog.ReturnBark() >= 60)
                 statsBuilder.Append("Bark:" + Environment.NewLine);
-
-
+            
           
             return statsBuilder.ToString();
         }

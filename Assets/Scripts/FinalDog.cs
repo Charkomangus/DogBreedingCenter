@@ -56,12 +56,13 @@ public class FinalDog : MonoBehaviour
         {
             System.Text.StringBuilder statsBuilder = new System.Text.StringBuilder();
           
-            statsBuilder.Append("Demeanor: "  + Environment.NewLine);
-            statsBuilder.Append("Trainability: "  + Environment.NewLine);
+            
+            statsBuilder.Append("Intelligence : "  + Environment.NewLine);
             statsBuilder.Append("Endurance: " + Environment.NewLine);
+            statsBuilder.Append("Demeanor: " + Environment.NewLine);
+            statsBuilder.Append("Hearing: " + Environment.NewLine);
             statsBuilder.Append("Scent: " + Environment.NewLine);
             statsBuilder.Append("Sight: " + Environment.NewLine);
-            statsBuilder.Append("Hearing: "  + Environment.NewLine);
             statsBuilder.Append("Bark: " +  Environment.NewLine);
             return statsBuilder.ToString();
         }
@@ -81,12 +82,13 @@ public class FinalDog : MonoBehaviour
             System.Text.StringBuilder statsNumbersBuilder = new System.Text.StringBuilder();
 
            
-            statsNumbersBuilder.Append(_dog.ReturnDemeanor() / 10 + "/10 (" + _dog.ReturnDemeanorDescription() + ")  " + Environment.NewLine);
-            statsNumbersBuilder.Append(_dog.ReturnTrainability() / 10 + "/10 (" + _dog.ReturnTrainabilityDescription() + ")  " + Environment.NewLine);
+         
+            statsNumbersBuilder.Append(_dog.ReturnIntelligence() / 10 + "/10 (" + _dog.ReturnIntelligenceDescription() + ")  " + Environment.NewLine);
             statsNumbersBuilder.Append(_dog.ReturnEndurance() / 10 + "/10 (" + _dog.ReturnEnduranceDescription() + ")  " + Environment.NewLine);
+            statsNumbersBuilder.Append(_dog.ReturnDemeanor() / 10 + "/10 (" + _dog.ReturnDemeanorDescription() + ")  " + Environment.NewLine);
+            statsNumbersBuilder.Append(_dog.ReturnHearing() / 10 + "/10 (" + _dog.ReturnHearingDescription() + ")  " + Environment.NewLine);
             statsNumbersBuilder.Append(_dog.ReturnScent() / 10 + "/10 (" + _dog.ReturnScentDescription() + ")  " + Environment.NewLine);
             statsNumbersBuilder.Append(_dog.ReturnSight() / 10 + "/10 (" + _dog.ReturnSightDescription() + ")  " + Environment.NewLine);
-            statsNumbersBuilder.Append(_dog.ReturnHearing() / 10 + "/10 (" + _dog.ReturnHearingDescription() + ")  " + Environment.NewLine);
             statsNumbersBuilder.Append(_dog.ReturnBark() / 10 + "/10 (" + _dog.ReturnBarkDescription() + ")  " + Environment.NewLine);
             return statsNumbersBuilder.ToString();
         }

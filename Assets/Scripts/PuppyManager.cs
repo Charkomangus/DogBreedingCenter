@@ -87,7 +87,6 @@ namespace Assets.Scripts
                 if(_slots[i].Item)
                     Destroy(_slots[i].Item);
             }
-            GameManager.Instance.SetDiversity();
             ClosePuppyManager();
 
         }
@@ -115,7 +114,7 @@ namespace Assets.Scripts
             statsBuilder.Append(_dog.ReturnName() + " is a " + _dog.ReturnSex().ToLower() + ", " +_dog.ReturnSizeDescription().ToLower() + " sized dog with a " +_dog.ReturnHairLengthDescription().ToLower() + " length " + "coat." +Environment.NewLine + Environment.NewLine);
        
             statsBuilder.Append("Demeanor: "  + _dog.ReturnDemeanor() / 10 + "/10" + Environment.NewLine);
-            statsBuilder.Append("Trainability: " + _dog.ReturnTrainability() / 10 + "/10" + Environment.NewLine);
+            statsBuilder.Append("Intelligence : " + _dog.ReturnIntelligence () / 10 + "/10" + Environment.NewLine);
             statsBuilder.Append("Endurance: "  + _dog.ReturnEndurance() / 10 + "/10" + Environment.NewLine);
             statsBuilder.Append("Scent: " + _dog.ReturnScent() / 10 + "/10" + Environment.NewLine);
             statsBuilder.Append("Sight: " + _dog.ReturnSight() / 10 + "/10" + Environment.NewLine);

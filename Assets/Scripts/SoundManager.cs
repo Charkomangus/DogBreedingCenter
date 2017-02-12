@@ -1,4 +1,5 @@
-﻿using LoLSDK;
+﻿using System;
+using LoLSDK;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -29,7 +30,7 @@ namespace Assets.Scripts
 
         public void SetVolume()
         {
-            LOLSDK.Instance.ConfigureSound(AudioVolume, MusicVolume, FadedMusicVolume);
+            LOLSDK.Instance.ConfigureSound(AudioVolume, MusicVolume, Math.Abs(MusicVolume) < 0.1f ? 0 : FadedMusicVolume);
         }
 
         //Control Volume

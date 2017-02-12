@@ -14,9 +14,9 @@ namespace Assets.Scripts
         [SerializeField] private Text[] _cardStatsText;
         [SerializeField] private Text[] _cardStatsNumberText;
         [SerializeField] private GameObject[] _item;
-        [SerializeField] public GameObject WarningPanel;
+        [SerializeField] public GameObject WarningPanel, WarningPanel1;
         [SerializeField] private GameObject _cardPrefab;
-
+        private int BreedingType;
         public bool _firstBirthDone, _secondBirthDone;
         private Generation _futureGeneration;
         private PuppyManager _puppyManager;
@@ -24,20 +24,20 @@ namespace Assets.Scripts
         private GameObject _geneticVariance;
         private GameObject _winningDog;
         public GameObject Holder;
-       [SerializeField]private int _decrease;
-        [SerializeField]private int _increase;
+        [SerializeField] private int _decrease;
+        [SerializeField] private int _increase;
         private bool _finalDogFound;
-    
+
         // Use this for initialization
         void Start()
         {
             _finalDogFound = false;
-             _item = new GameObject[_cardStatsText.Length];
+            _item = new GameObject[_cardStatsText.Length];
             _generationManager = GameObject.FindWithTag("Main");
             _geneticVariance = GameObject.FindWithTag("GeneticVariance");
             _puppyManager = GameObject.FindWithTag("PuppyManager").GetComponent<PuppyManager>();
             _cardPrefab = GameManager.Instance.ChosenCardPrefab;
-           HasChanged();
+            HasChanged();
             if (_decrease == 0)
                 _decrease = -5;
             if (_increase == 0)
@@ -48,7 +48,7 @@ namespace Assets.Scripts
                 _firstBirthDone = true;
                 _secondBirthDone = true;
             }
-          
+
         }
 
         #region IHasChanged implementation
@@ -70,36 +70,33 @@ namespace Assets.Scripts
                 {
                     nameBuilder.Append(_item[i].GetComponent<Dog>().ReturnName());
 
-                   
-                  
-                    statsBuilder.Append("Demeanor: " + Environment.NewLine);
 
 
+                    statsBuilder.Append("Intelligence : " + Environment.NewLine);
                     statsBuilder.Append("Endurance: " + Environment.NewLine);
+                    statsBuilder.Append("Demeanor: " + Environment.NewLine);
+                    statsBuilder.Append("Hearing: " + Environment.NewLine);
                     statsBuilder.Append("Scent: " + Environment.NewLine);
                     statsBuilder.Append("Sight: " + Environment.NewLine);
-                    statsBuilder.Append("Hearing: " + Environment.NewLine);
                     statsBuilder.Append("Bark: " + Environment.NewLine);
-                    statsBuilder.Append("Trainability: " + Environment.NewLine);
 
 
-              
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnDemeanor() / 10 + "/10" +
+
+                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnIntelligence()/10 + "/10" +
                                                Environment.NewLine);
-
-
                     statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnEndurance()/10 + "/10" +
+                                               Environment.NewLine);
+                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnDemeanor()/10 + "/10" +
+                                               Environment.NewLine);
+                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnHearing()/10 + "/10" +
                                                Environment.NewLine);
                     statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnScent()/10 + "/10" +
                                                Environment.NewLine);
                     statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnSight()/10 + "/10" +
                                                Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnHearing()/10 + "/10" +
-                                               Environment.NewLine);
                     statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnBark()/10 + "/10" +
                                                Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnTrainability()/10 + "/10" +
-                                               Environment.NewLine);
+
 
 
                 }
@@ -126,7 +123,7 @@ namespace Assets.Scripts
                 HasChanged();
 
             }
-           
+
         }
 
 
@@ -166,7 +163,6 @@ namespace Assets.Scripts
                     WarningPanel.SetActive(true);
                     break;
                 case 1:
-
                     WarningPanel.GetComponentInChildren<Text>().text = "You need two dogs in order to breed them!";
                     WarningPanel.SetActive(true);
                     break;
@@ -174,9 +170,25 @@ namespace Assets.Scripts
                     if (_cardSlots.GetComponentsInChildren<CardSlot>()[0].Item.GetComponent<Dog>().ReturnSex() ==
                         _cardSlots.GetComponentsInChildren<CardSlot>()[1].Item.GetComponent<Dog>().ReturnSex())
                     {
-                        WarningPanel.GetComponentInChildren<Text>().text =
-                            "The dogs need to be a different gender!";
+                        WarningPanel.GetComponentInChildren<Text>().text = "The dogs need to be a different gender!";
                         WarningPanel.SetActive(true);
+                    }
+                    else if (
+                        _cardSlots.GetComponentsInChildren<CardSlot>()[0].Item.GetComponent<Dog>()
+                            .ReturnSiblings()
+                            .Contains(_cardSlots.GetComponentsInChildren<CardSlot>()[1].Item))
+                    {
+                        WarningPanel1.GetComponentInChildren<Text>().text =
+                            "These dogs are siblings! If you breed them you will lose 6% of the genetic diversity!";
+                        WarningPanel1.SetActive(true);
+                        BreedingType = 1;
+                    }
+                    else if (_cardSlots.GetComponentsInChildren<CardSlot>()[0].Item.GetComponent<Dog>().ReturnHalfSiblings().Contains(_cardSlots.GetComponentsInChildren<CardSlot>()[1].Item))
+                    {
+                        WarningPanel1.GetComponentInChildren<Text>().text =
+                            "These dogs are half-siblings! If you breed them you will lose 3% of the genetic diversity!";
+                        WarningPanel1.SetActive(true);
+                        BreedingType = 2;
                     }
                     else
                     {
@@ -191,10 +203,11 @@ namespace Assets.Scripts
                             }
                             _puppyManager.OpenPuppyManager(puppies);
                             GameManager.Instance.SoundManager.PlaySoundEffect("Sound/puppy.wav");
-                            GameManager.Instance.DialogueManager.OpenDialogue(GameManager.Instance.CurrentLevel +
-                                                                             "/firstBirth");
-                        
-                    }
+                            GameManager.Instance.DialogueManager.OpenDialogue(
+                                GameManager.Instance.CurrentLevel +
+                                "/firstBirth");
+
+                        }
                         else
                         {
                             int temp = Random.Range(1, 5);
@@ -217,18 +230,61 @@ namespace Assets.Scripts
                                 if (!_secondBirthDone)
                                 {
                                     _secondBirthDone = true;
-                                    GameManager.Instance.DialogueManager.OpenDialogue(GameManager.Instance.CurrentLevel +
-                                                                            "/secondBirth");
+                                    GameManager.Instance.DialogueManager.OpenDialogue(
+                                        GameManager.Instance.CurrentLevel +
+                                        "/secondBirth");
                                 }
                                 _puppyManager.OpenPuppyManager(puppies);
                                 GameManager.Instance.SoundManager.PlaySoundEffect("Sound/puppy.wav");
                             }
                         }
                         ExitBreedingMenu();
-                       GameManager.Instance.SideBar.SetBool("Open", false);
+                        GameManager.Instance.SideBar.SetBool("Open", false);
                     }
                     break;
             }
+        }
+
+        //Breed with no pesky warnings
+        public void BreedWithNoWarnings()
+        {
+            WarningPanel1.SetActive(false);
+            int temp = Random.Range(1, 5);
+            GameObject[] puppies = new GameObject[temp];
+            for (int i = 0; i < temp; i++)
+            {
+                puppies[i] = MakeNewDog();
+                puppies[i].transform.SetParent(Holder.transform);
+                if (GameManager.Instance.IsFinalDog(puppies[i].GetComponent<Dog>()))
+                {
+                    _finalDogFound = true;
+                    _winningDog = puppies[i];
+                }
+
+            }
+            if (_finalDogFound)
+                _winningDog.GetComponent<Card>().OpenFinalDog();
+            else
+            {
+                if (!_secondBirthDone)
+                {
+                    _secondBirthDone = true;
+                    GameManager.Instance.DialogueManager.OpenDialogue(GameManager.Instance.CurrentLevel +"/secondBirth");
+                }
+                _puppyManager.OpenPuppyManager(puppies);
+                GameManager.Instance.SoundManager.PlaySoundEffect("Sound/puppy.wav");
+            }
+            switch (BreedingType)
+            {
+                case 1:
+                    GameManager.Instance.GeneticVarience.value -= 6;
+                    break;
+                case 2:
+                    GameManager.Instance.GeneticVarience.value -= 3;
+                    break;
+            }
+            ExitBreedingMenu();
+            GameManager.Instance.SideBar.SetBool("Open", false);
         }
 
         //Open the menu
@@ -291,8 +347,8 @@ namespace Assets.Scripts
             newDog.SetDemeanor(Constrain((parent0.ReturnDemeanor() + parent1.ReturnDemeanor())/2 + Random.Range(min, max)));
             //Set Sight
             newDog.SetSight(Constrain((parent0.ReturnSight() + parent1.ReturnSight())/2 + Random.Range(min, max)));
-            //Set Trainability
-            newDog.SetTrainability(Constrain((parent0.ReturnTrainability() + parent1.ReturnTrainability())/2 +Random.Range(min, max)));
+            //Set Intelligence 
+            newDog.SetIntelligence (Constrain((parent0.ReturnIntelligence () + parent1.ReturnIntelligence ())/2 +Random.Range(min, max)));
             //Set Hair
             newDog.SetHairLength(Constrain((parent0.ReturnHair() + parent1.ReturnHair())/2 + Random.Range(_decrease, _increase)));
             //Set Strenth

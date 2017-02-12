@@ -50,7 +50,10 @@ namespace Assets.Scripts
             _startParent = transform.parent; //Save starting parent
             _canvasGroup.blocksRaycasts = false;
             _startScale = transform.localScale;
-            transform.localScale = new Vector3(1, 1, 1);
+            if(GameManager.Instance.CurrentLevel == "Quiz1" || GameManager.Instance.CurrentLevel == "Quiz2" || GameManager.Instance.CurrentLevel == "Quiz3" )
+                transform.localScale = new Vector3(0.6f, 0.6f, 1);
+            else
+                transform.localScale = new Vector3(1, 1, 1);
             transform.SetParent(_cardHolder.transform); 
         }
 
@@ -146,6 +149,7 @@ namespace Assets.Scripts
         public void OnPointerUp(PointerEventData eventData)
         {
             if (transform.parent.tag == "cardHolder")
+                if(_card!=null)
                 _card.ReturnToParent();
             endTime = Time.time;
             holdTime = endTime - startTime;

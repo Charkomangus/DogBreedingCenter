@@ -13,17 +13,8 @@ namespace Assets.Scripts
     public class GameManager : MonoBehaviour
     {
         //>>>>FONT<<<<<
-        [SerializeField] public bool DyslexiaFontEnabled;
         [SerializeField] public bool TutorialEnabled;
-        private bool _dyslexiaFontOriginal = true;
-
-        private Font _dyslexicFont; //Game Fonts
-        bool _dysFontHasBeenEnabled;
-        [SerializeField] private Text[] _allTextInScene;
-        [SerializeField] private Font[] _allTextFontInScene;
-        private int _textNumber;
-        private int _textCount;
-        //>>>>FONT<<<<<
+      //>>>>FONT<<<<<
 
 
         //>>>BUTTONS<<<
@@ -65,6 +56,7 @@ namespace Assets.Scripts
         //>>>VARIABLES<<<<
         public string CurrentLevel, NextLevel;
         public bool Victory;
+        public float MaxX, MinX, MaxY, MinY;
         //>>>VARIABLES<<<<
 
         //>>>PREFABS<<<<
@@ -87,7 +79,6 @@ namespace Assets.Scripts
         //Awake is always called before any Start functions
         private void Awake()
         {
-            _dyslexicFont = (Font) Resources.Load("Fonts/OpenDyslexic-Regular");
             ShepardCard = (GameObject) Resources.Load("Prefabs/ShepardCard");
             MastiffCard = (GameObject) Resources.Load("Prefabs/MastiffCard");
             PointerCard = (GameObject) Resources.Load("Prefabs/PointerCard");
@@ -114,8 +105,8 @@ namespace Assets.Scripts
 
             //Call the InitGame function to initialize the first level 
             InitGame(SceneManager.GetActiveScene());
-            SetFont();
-
+        
+            SetBounds();
         }
 
 
@@ -146,8 +137,6 @@ namespace Assets.Scripts
         void OnLevelWasLoaded()
         {
             InitGame(SceneManager.GetActiveScene());
-            _textNumber = _allTextFontInScene.Length;
-
         }
 
 
@@ -155,11 +144,9 @@ namespace Assets.Scripts
         //Initializes the game for each level.
         void InitGame(Scene activeScene)
         {
-            SetFont();
+            SetBounds();
             Failed = false;
-
             Victory = false;
-            _dysFontHasBeenEnabled = false;
             CalculateNextLevel();
 
             if (GameObject.FindGameObjectWithTag("Dialogue") != null)
@@ -186,7 +173,7 @@ namespace Assets.Scripts
 
                 case "Intro":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 1, 10);
+                    LOLSDK.Instance.SubmitProgress(0, 1, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
 
                     Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
@@ -200,7 +187,7 @@ namespace Assets.Scripts
                 case "Level0":
 
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 2, 10);
+                    LOLSDK.Instance.SubmitProgress(0, 2, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
 
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
@@ -215,7 +202,7 @@ namespace Assets.Scripts
                 case "Level1":
 
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 4, 10);
+                    LOLSDK.Instance.SubmitProgress(0, 4, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
@@ -226,7 +213,7 @@ namespace Assets.Scripts
                 case "Level2":
 
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 6, 10);
+                    LOLSDK.Instance.SubmitProgress(0, 6, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
@@ -236,7 +223,7 @@ namespace Assets.Scripts
                     break;
                 case "Level3":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 8, 10);
+                    LOLSDK.Instance.SubmitProgress(0, 8, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
@@ -247,7 +234,7 @@ namespace Assets.Scripts
                     break;
                 case "Quiz1":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 10, 11);
+                    LOLSDK.Instance.SubmitProgress(0, 10, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
@@ -259,11 +246,23 @@ namespace Assets.Scripts
                     break;
                 case "Quiz2":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 11, 11);
+                    LOLSDK.Instance.SubmitProgress(0, 11, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue("Quiz2/Introduction");
+                    //SOUND
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
+                    QuizManager = GameObject.FindGameObjectWithTag("QuizManager").GetComponent<QuizManager>();
+                    break;
+                case "Quiz3":
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    LOLSDK.Instance.SubmitProgress(0, 12, 12);
+                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                    Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
+                    if (!DialogueManager.IsOpen() && TutorialEnabled)
+                        DialogueManager.OpenDialogue("Quiz3/Introduction");
                     //SOUND
                     SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
                     SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
@@ -276,18 +275,6 @@ namespace Assets.Scripts
         //Update is called every frame.
         private void Update()
         {
-
-            if (DyslexiaFontEnabled != _dyslexiaFontOriginal)
-            {
-                SetFont();
-                _dyslexiaFontOriginal = DyslexiaFontEnabled;
-            }
-
-            if (_allTextInScene.Length != _textNumber)
-            {
-                _textNumber = _allTextInScene.Length;
-                SetFont();
-            }
 
             if (Failed && !DialogueManager.IsOpen())
             {
@@ -349,8 +336,7 @@ namespace Assets.Scripts
                     if (DialogueManager.IsOpen() == false && Victory)
                     {
                         Victory = false;
-                        StartCoroutine(LoadNextLevel());
-                        Fade.SetBool("Open", true);
+                        SceneManager.LoadScene("Quiz2");
                     }
 
                     break;
@@ -358,9 +344,16 @@ namespace Assets.Scripts
                     if (DialogueManager.IsOpen() == false && Victory)
                     {
                         Victory = false;
+                        SceneManager.LoadScene("Quiz3");
+                    }
+
+                    break;
+                case "Quiz3":
+                    if (DialogueManager.IsOpen() == false && Victory)
+                    {
+                        Victory = false;
                         StartCoroutine(EndGame());
                         Fade.SetBool("Open", true);
-
                     }
 
                     break;
@@ -422,59 +415,7 @@ namespace Assets.Scripts
             }
         }
 
-        //Check if the dyslexia font should be enabled
-        private void SetFont()
-        {
-
-            _allTextInScene = FindObjectsOfType<Text>(); //All text
-
-            if (_allTextFontInScene.Length == 0 || _allTextInScene.Length != _textCount)
-            {
-                _allTextFontInScene = new Font[_allTextInScene.Length];
-                for (int i = 0; i < _allTextInScene.Length; i++)
-                    _allTextFontInScene[i] = _allTextInScene[i].font;
-            }
-
-            _textCount = _allTextInScene.Length;
-
-
-            for (int i = 0; i < _textCount; i++)
-            {
-                Text txt = _allTextInScene[i];
-
-                if (DyslexiaFontEnabled)
-                {
-                    txt.font = _dyslexicFont;
-                    if (txt.tag != "dialogueText" && txt.transform.parent.tag != "cardText")
-                        txt.resizeTextForBestFit = true;
-
-                    else if (txt.transform.parent.tag != "cardText")
-                    {
-                        txt.rectTransform.sizeDelta = new Vector2(804, 127);
-                    }
-                    _dysFontHasBeenEnabled = true;
-                }
-                else
-                {
-                    txt.resizeTextForBestFit = false;
-                    if (txt.tag == "dialogueText")
-                        txt.rectTransform.sizeDelta = new Vector2(804, 108);
-
-                    if (!_dysFontHasBeenEnabled) continue;
-                    for (int j = 0; j < _allTextInScene.Length; j++)
-                    {
-                        _allTextInScene[j].font = _allTextFontInScene[j];
-                    }
-                }
-            }
-
-        }
-
-        //Control Dyslexia font
-        public void DyslexiaEnabled()
-        {
-            DyslexiaFontEnabled = !DyslexiaFontEnabled;
-        }
+       
 
 
 
@@ -485,27 +426,27 @@ namespace Assets.Scripts
             {
                 case "Level0":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 3, 11);
+                    LOLSDK.Instance.SubmitProgress(0, 3, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnTrainability() > 60 && puppy.ReturnScent() > 60;
+                    return puppy.ReturnIntelligence () > 60 && puppy.ReturnScent() > 60;
                 case "Level1":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 5, 11);
+                    LOLSDK.Instance.SubmitProgress(0, 5, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     return puppy.ReturnEndurance() > 70 && puppy.ReturnSize() > 60 && puppy.ReturnBark() > 60 &&
                            puppy.ReturnScent() > 60;
                 case "Level2":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 7, 11);
+                    LOLSDK.Instance.SubmitProgress(0, 7, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnTrainability() > 80 && puppy.ReturnSight() > 70 && puppy.ReturnDemeanor() > 60 &&
+                    return puppy.ReturnIntelligence () > 70 && puppy.ReturnSight() > 70 && puppy.ReturnDemeanor() > 60 &&
                            puppy.ReturnSize() > 60;
                 case "Level3":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 9, 11);
+                    LOLSDK.Instance.SubmitProgress(0, 9, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnTrainability() > 80 && puppy.ReturnEndurance() > 60 && puppy.ReturnScent() > 90 &&
-                           puppy.ReturnDemeanor() > 80;
+                    return puppy.ReturnIntelligence () > 80 && puppy.ReturnEndurance() > 60 && puppy.ReturnScent() > 80 &&
+                           puppy.ReturnDemeanor() > 60;
                 default:
                     return false;
             }
@@ -535,32 +476,56 @@ namespace Assets.Scripts
                     NextLevel = "Level3";
                     break;
                 case "Level3":
-
                     NextLevel = "Quiz1";
                     break;
                 case "Quiz1":
                     NextLevel = "Quiz2";
                     break;
                 case "Quiz2":
-                    NextLevel = "Menu";
+                    NextLevel = "Quiz3";
                     break;
 
             }
         }
+
+        private void SetBounds()
+        {
+            switch (CurrentLevel)
+            {
+
+                case "Level0":
+                    MaxX = 0;
+                    MinX = -250;
+                    MinY = 0;
+                    MaxY = 100;
+                    break;
+                case "Level1":
+                    MaxX = 0;
+                    MinY = 0;
+                    MinX = -300;
+                    MaxY = 150;
+                    break;
+                case "Level2":
+                    MaxX = 0;
+                    MinY = 0;
+                    MinX = -500;
+                    MaxY = 300;
+                    break;
+                case "Level3":
+                    MaxX = 0;
+                    MinY = 0;
+                    MinX = -500;
+                    MaxY = 500;
+                    break;
+            }
+        }
+
 
         //Show polaroids
         private IEnumerator LoadNextLevel()
         {
             yield return new WaitForSeconds(3);
             SceneManager.LoadScene(NextLevel);
-            StopAllCoroutines();
-        }
-
-       
-        private IEnumerator LoadNextLevel(string filepath)
-        {
-            yield return new WaitForSeconds(3);
-            SceneManager.LoadScene(filepath);
             StopAllCoroutines();
         }
 
@@ -580,11 +545,7 @@ namespace Assets.Scripts
         }
 
 
-        public void SetDiversity()
-        {
-            int max = GeneticVarience.value;
-            GeneticVarience.value = (int)(max - GenerationManager.ReturnFutureGeneration().CalculateTotalDiversity());
-        }
+       
     }
 
 }

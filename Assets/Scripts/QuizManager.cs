@@ -10,7 +10,8 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start ()
         {
-            _polaroids = GameObject.FindGameObjectWithTag("Polaroid").GetComponentInParent<Animator>();
+            if (GameObject.FindGameObjectWithTag("Polaroid") != null)
+                _polaroids = GameObject.FindGameObjectWithTag("Polaroid").GetComponentInParent<Animator>();
             _quiz = GameObject.FindGameObjectWithTag("Quiz").GetComponent<Animator>();
             _cardSlots = FindObjectsOfType<QuizCardSlot>();
         }
@@ -27,6 +28,7 @@ namespace Assets.Scripts
 
             if (_count != _cardSlots.Length) return;
             _quiz.SetTrigger("Close");
+            if (GameManager.Instance.Victory) return;
             GameManager.Instance.DialogueManager.OpenDialogue(GameManager.Instance.CurrentLevel+ "/Victory");
             GameManager.Instance.Victory = true;
         }
@@ -34,7 +36,10 @@ namespace Assets.Scripts
 
         public void ShutDownThePolaroids()
         {
-            _polaroids.SetTrigger("Open");
+            if (_polaroids != null)
+            {
+                _polaroids.SetTrigger("Open");
+            }
         }
 
         public void SwitchOnTheQuiz()
