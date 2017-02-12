@@ -181,6 +181,7 @@ namespace Assets.Scripts
                 case "Menu":
                     //SOUND
                     SoundManager.PlayBackgroundMusic("Music/menuAmbient.mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
                     break;
 
                 case "Intro":
@@ -228,6 +229,15 @@ namespace Assets.Scripts
                     Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue("Quiz1/Introduction");
+                    //SOUND
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
+                    QuizManager = GameObject.FindGameObjectWithTag("QuizManager").GetComponent<QuizManager>();
+                    break;
+                case "Quiz2":
+                    Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
+                    if (!DialogueManager.IsOpen() && TutorialEnabled)
+                        DialogueManager.OpenDialogue("Quiz2/Introduction");
                     //SOUND
                     SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
                     SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
@@ -315,6 +325,16 @@ namespace Assets.Scripts
                         Victory = false;
                         StartCoroutine(LoadNextLevel());
                         Fade.SetBool("Open", true);
+                    }
+
+                    break;
+                case "Quiz2":
+                    if (DialogueManager.IsOpen() == false && Victory)
+                    {
+                        Victory = false;
+                        StartCoroutine(LoadNextLevel("Menu"));
+                        Fade.SetBool("Open", true);
+
                     }
 
                     break;
@@ -481,8 +501,10 @@ namespace Assets.Scripts
                     NextLevel = "Quiz1";
                     break;
                 case "Quiz1":
-
-                    NextLevel = "_Init";
+                    NextLevel = "Quiz2";
+                    break;
+                case "Quiz2":
+                    NextLevel = "Menu";
                     break;
 
             }
@@ -491,8 +513,17 @@ namespace Assets.Scripts
         //Show polaroids
         private IEnumerator LoadNextLevel()
         {
-            yield return new WaitForSeconds(3);     
+            yield return new WaitForSeconds(3);
             SceneManager.LoadScene(NextLevel);
+            StopAllCoroutines();
+        }
+
+        //Show polaroids
+        private IEnumerator LoadNextLevel(string filepath)
+        {
+            yield return new WaitForSeconds(3);
+            SceneManager.LoadScene(filepath);
+            StopAllCoroutines();
         }
 
         //Show polaroids
@@ -500,7 +531,7 @@ namespace Assets.Scripts
         {
             yield return new WaitForSeconds(3);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+            StopAllCoroutines();
         }
     }
 

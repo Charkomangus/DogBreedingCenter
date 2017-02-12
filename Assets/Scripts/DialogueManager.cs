@@ -102,10 +102,13 @@ namespace Assets.Scripts
         //Set all variables to starting positions and start text coroutine
         public void OpenDialogue(string filepath)
         {
-            if (_open || _finished) return;
+            if (_open || _finished)return;
+
+
             //If its a tutorial dialogue only show the tooltips
             if (filepath == "tutorial")
             {
+                _open = true;
                 _tooltipAnimators = GameObject.FindGameObjectWithTag("Tooltip").GetComponent<Tooltip>().ReturnTooltips();
                 _tooltipCounter = 0;
                _fade.SetBool("Open", true);    //Darken Screen

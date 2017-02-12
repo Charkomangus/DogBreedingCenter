@@ -143,7 +143,7 @@ namespace Assets.Scripts
         //Set this card as the chosen card of the CardReview
         public void OpenCardReview()
         {
-            GameManager.Instance.SoundManager.PlaySoundEffect(Random.Range(0, 2) == 0? "Sound/Bark.mp3": "Sound/doubleBark.mp3");
+            GameManager.Instance.SoundManager.PlaySoundEffect(Random.Range(0, 2) == 0? "Sound/Bark.wav": "Sound/doubleBark.wav");
 
             GameManager.Instance.SideBar.SetBool("Open", false);
             GameManager.Instance.CardReview.GetComponent<Animator>().SetBool("Open", true);

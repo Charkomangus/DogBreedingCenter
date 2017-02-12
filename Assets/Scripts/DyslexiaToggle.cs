@@ -10,13 +10,13 @@ namespace Assets.Scripts
         void Start ()
         {
             _toggle = GetComponent<Toggle>();
+            _toggle.isOn = GameManager.Instance.DyslexiaFontEnabled;
         }
 
 
         public void SetDyslexiaFont()
         {
-            GameManager temp = GameObject.FindObjectOfType<GameManager>();
-            temp.DyslexiaFontEnabled = _toggle.isOn;
+          GameManager.Instance.DyslexiaFontEnabled = _toggle.isOn;
         }
     }
 }
