@@ -13,7 +13,7 @@ public class SideBar : MonoBehaviour
 	void Start ()
 	{
 	    _allText = GetComponentsInChildren<Text>();
-	    for (int i = 0; i < 3; i++)
+	    for (int i = 0; i < 4; i++)
 	    {
             _allText[i].text = LoadText(GameManager.Instance.CurrentLevel + "/MissionObjective" + i);
         }

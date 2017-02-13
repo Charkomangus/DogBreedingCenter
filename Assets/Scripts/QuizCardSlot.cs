@@ -40,7 +40,7 @@ namespace Assets.Scripts
             if (DragHandler.ItemBeingDragged.name != acceptedReward && DragHandler.ItemBeingDragged.name != acceptedReward2)
             {
 
-                GameManager.Instance.DialogueManager.OpenDialogue("Woops"+Random.Range(0,3));
+                GameManager.Instance.DialogueManager.OpenDialogue("Woops"+Random.Range(0,5));
                 return;
             }
            

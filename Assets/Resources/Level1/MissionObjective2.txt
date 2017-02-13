@@ -1,4 +1,4 @@
 REQUIREMENTS:
-Endurance:         7/10
-Scent:                 6/10
-Bark:                   6/10
+Endurance:
+Scent:
+Bark:              

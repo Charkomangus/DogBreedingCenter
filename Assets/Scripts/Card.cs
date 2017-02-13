@@ -49,7 +49,8 @@ namespace Assets.Scripts
          
             if (transform.parent.tag == "breedingSlotHolder" || transform.parent.tag == "Holder" ||
                 transform.parent.tag == "cardHolder" || transform.parent.tag == "cardReviewSlot" ||
-                transform.parent.tag == "FinalDogSlot")
+                transform.parent.tag == "FinalDogSlot" ||
+                transform.parent.tag == "PuppySlots")
             {
                 _reviewButton.interactable = false;
                 _reviewButton.blocksRaycasts = false;
@@ -76,21 +77,14 @@ namespace Assets.Scripts
         private string SetStatNumberText()
         {
             System.Text.StringBuilder statsNumbersBuilder = new System.Text.StringBuilder();
-           
-            if (_dog.ReturnDemeanor() >= 60)
-                statsNumbersBuilder.Append(_dog.ReturnDemeanor() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnIntelligence () >= 60)
-                statsNumbersBuilder.Append(_dog.ReturnIntelligence () / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnEndurance() >= 60)
-                statsNumbersBuilder.Append(_dog.ReturnEndurance() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnScent() >= 60)
-                statsNumbersBuilder.Append(_dog.ReturnScent() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnSight() >= 60)
-                statsNumbersBuilder.Append(_dog.ReturnSight() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnHearing() >= 60)
-                statsNumbersBuilder.Append(_dog.ReturnHearing() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnBark() >= 60)
-                statsNumbersBuilder.Append(_dog.ReturnBark() / 10 + "/10" + Environment.NewLine);
+
+            if (_dog.ReturnIntelligence() >= 60)statsNumbersBuilder.Append(_dog.ReturnIntelligence() / 10 + "/10" + Environment.NewLine);
+            if (_dog.ReturnEndurance() >= 60)statsNumbersBuilder.Append(_dog.ReturnEndurance() / 10 + "/10" + Environment.NewLine);
+            if (_dog.ReturnDemeanor() >= 60)statsNumbersBuilder.Append(_dog.ReturnDemeanor() / 10 + "/10" + Environment.NewLine);
+            if (_dog.ReturnHearing() >= 60) statsNumbersBuilder.Append(_dog.ReturnHearing() / 10 + "/10" + Environment.NewLine);
+            if (_dog.ReturnScent() >= 60)statsNumbersBuilder.Append(_dog.ReturnScent() / 10 + "/10" + Environment.NewLine);
+            if (_dog.ReturnSight() >= 60)statsNumbersBuilder.Append(_dog.ReturnSight() / 10 + "/10" + Environment.NewLine);
+            if (_dog.ReturnBark() >= 60)statsNumbersBuilder.Append(_dog.ReturnBark() / 10 + "/10" + Environment.NewLine);
             return statsNumbersBuilder.ToString();
         }
         //Use dog componment to populate the text describing the card

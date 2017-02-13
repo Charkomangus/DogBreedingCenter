@@ -33,7 +33,13 @@ public class FinalDog : MonoBehaviour
 	{
 	    if (_animator.GetBool("Open") && !_finished)
 	    {
-	        GameManager.Instance.DialogueManager.OpenDialogue(GameManager.Instance.CurrentLevel + "/FinalDog");
+	        GameManager.Instance.DialogueManager.OpenDialogue(GameManager.Instance.CurrentLevel + "/" +
+	                                                          "" +
+	                                                          "" +
+	                                                          "" +
+	                                                          "" +
+	                                                          "" +
+	                                                          "Dog");
 	        GameManager.Instance.Victory = true;
             _finished = true;
 	    }

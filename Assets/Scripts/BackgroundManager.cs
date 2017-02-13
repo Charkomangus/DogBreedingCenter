@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Assets.Scripts
 {
-    public class BackgroundManager : MonoBehaviour, IPointerDownHandler, IPointerExitHandler
+    public class BackgroundManager : MonoBehaviour, IPointerDownHandler, IPointerExitHandler,IPointerUpHandler
     {
 
         private bool pressed;
@@ -20,7 +20,7 @@ namespace Assets.Scripts
         void Update()
         {
             if (pressed)
-                _mainMovable.localPosition += new Vector3(x*200, y*200, 0)*Time.deltaTime;
+                _mainMovable.localPosition += new Vector3(x*250, y* 250, 0)*Time.deltaTime;
             OutOfBounds();
         }
 
@@ -33,7 +33,10 @@ namespace Assets.Scripts
         {
             pressed = false;
         }
-
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            pressed = false;
+        }
 
 
 
@@ -59,6 +62,8 @@ namespace Assets.Scripts
                 _mainMovable.localPosition = new Vector3(_mainMovable.localPosition.x, GameManager.Instance.MaxY);
             }
         }
+
+       
     }
 }
 

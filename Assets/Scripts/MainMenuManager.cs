@@ -6,12 +6,10 @@ namespace Assets.Scripts
 {
    
     public class MainMenuManager : MonoBehaviour {
-        [SerializeField]int level;
+       
 
-        public void StartGame()
+        public void LoadLevel(string level)
         {
-            if (level == 0)
-                level = 2;
             SceneManager.LoadScene(level);
         }
 

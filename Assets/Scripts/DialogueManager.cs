@@ -382,7 +382,10 @@ namespace Assets.Scripts
                     break;
                 case '#':
                     GameManager.Instance.QuizManager.ShutDownThePolaroids();
-                    GameManager.Instance.QuizManager.SwitchOnTheQuiz();
+                    GameManager.Instance.QuizManager.SwitchOnTheQuiz(0);
+                    break;
+                case '@':
+                    GameManager.Instance.QuizManager.SwitchOnTheQuiz(1);
                     break;
 
 

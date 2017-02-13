@@ -79,6 +79,7 @@ namespace Assets.Scripts
         //Awake is always called before any Start functions
         private void Awake()
         {
+            Application.targetFrameRate = 60;
             ShepardCard = (GameObject) Resources.Load("Prefabs/ShepardCard");
             MastiffCard = (GameObject) Resources.Load("Prefabs/MastiffCard");
             PointerCard = (GameObject) Resources.Load("Prefabs/PointerCard");
@@ -196,6 +197,7 @@ namespace Assets.Scripts
                     ChosenCardPrefab = PointerCard;
                     LoadGameManagers();
                     SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
                     SoundManager.PlayBackgroundMusic("Music/Thinking Music.ogg");
 
                     break;
@@ -246,7 +248,7 @@ namespace Assets.Scripts
                     break;
                 case "Quiz2":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 11, 12);
+                    LOLSDK.Instance.SubmitProgress(0, 12, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
@@ -256,18 +258,7 @@ namespace Assets.Scripts
                     SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
                     QuizManager = GameObject.FindGameObjectWithTag("QuizManager").GetComponent<QuizManager>();
                     break;
-                case "Quiz3":
-                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 12, 12);
-                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    Fade = GameObject.FindGameObjectWithTag("Fade").GetComponent<Animator>();
-                    if (!DialogueManager.IsOpen() && TutorialEnabled)
-                        DialogueManager.OpenDialogue("Quiz3/Introduction");
-                    //SOUND
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
-                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
-                    QuizManager = GameObject.FindGameObjectWithTag("QuizManager").GetComponent<QuizManager>();
-                    break;
+               
             }
         }
 
@@ -341,14 +332,6 @@ namespace Assets.Scripts
 
                     break;
                 case "Quiz2":
-                    if (DialogueManager.IsOpen() == false && Victory)
-                    {
-                        Victory = false;
-                        SceneManager.LoadScene("Quiz3");
-                    }
-
-                    break;
-                case "Quiz3":
                     if (DialogueManager.IsOpen() == false && Victory)
                     {
                         Victory = false;
@@ -428,24 +411,23 @@ namespace Assets.Scripts
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     LOLSDK.Instance.SubmitProgress(0, 3, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnIntelligence () > 60 && puppy.ReturnScent() > 60;
+                    return puppy.ReturnIntelligence () > 60 && puppy.ReturnScent() > 70;
                 case "Level1":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     LOLSDK.Instance.SubmitProgress(0, 5, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnEndurance() > 70 && puppy.ReturnSize() > 60 && puppy.ReturnBark() > 60 &&
-                           puppy.ReturnScent() > 60;
+                    return puppy.ReturnEndurance() > 70 && puppy.ReturnBark() > 60 &&
+                           puppy.ReturnScent() > 70;
                 case "Level2":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     LOLSDK.Instance.SubmitProgress(0, 7, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnIntelligence () > 70 && puppy.ReturnSight() > 70 && puppy.ReturnDemeanor() > 60 &&
-                           puppy.ReturnSize() > 60;
+                    return puppy.ReturnIntelligence() > 70 && puppy.ReturnSight() > 70 && puppy.ReturnDemeanor() > 70;
                 case "Level3":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     LOLSDK.Instance.SubmitProgress(0, 9, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnIntelligence () > 80 && puppy.ReturnEndurance() > 60 && puppy.ReturnScent() > 80 &&
+                    return puppy.ReturnIntelligence () > 80 && puppy.ReturnEndurance() > 70 && puppy.ReturnScent() > 80 &&
                            puppy.ReturnDemeanor() > 60;
                 default:
                     return false;
@@ -503,18 +485,18 @@ namespace Assets.Scripts
                     MaxX = 0;
                     MinY = 0;
                     MinX = -300;
-                    MaxY = 150;
+                    MaxY = 250;
                     break;
                 case "Level2":
                     MaxX = 0;
                     MinY = 0;
                     MinX = -500;
-                    MaxY = 300;
+                    MaxY = 350;
                     break;
                 case "Level3":
                     MaxX = 0;
                     MinY = 0;
-                    MinX = -500;
+                    MinX = -600;
                     MaxY = 500;
                     break;
             }

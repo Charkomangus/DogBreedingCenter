@@ -1,5 +1,5 @@
 REQUIREMENTS:
-Scent:                     8/10
-Intelligence:            8/10
-Demeanor:             6/10
-Endurance:             6/10
+Intelligence:
+Endurance:
+Demeanor:
+Scent:
