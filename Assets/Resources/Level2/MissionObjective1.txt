@@ -1,4 +1,4 @@
 The farmers are asking for our help now. We are tasked with creating a guard dog for a farm.
 This dog would need to have a calm demeanor as it will be interacting with many people, including the children living there.
 
-Good sight would be useful for scoping out would-be intruders. Finally, it needs to be trainable and extremely loyal to it's owner.
+Good sight would be useful for scoping out would-be intruders. Finally, it needs to be trainable and extremely loyal to its owner.
