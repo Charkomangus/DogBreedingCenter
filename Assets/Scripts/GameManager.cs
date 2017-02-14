@@ -171,7 +171,6 @@ namespace Assets.Scripts
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
                     SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
                     SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
-                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
                     SoundManager.PlayBackgroundMusic("Music/menuAmbient.mp3");
                     break;
 

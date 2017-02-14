@@ -28,13 +28,12 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update ()
         {
-            if (Math.Abs(Math.Abs(oldvalue - slider.value)) < 0.01f)
-            {
-                if (Math.Abs(slider.value) < 0.01f)
-                    text.text = "MUTED";
-                else
-                    text.text = (int) (slider.value*100) + "%";
-            }
+            if (oldvalue == slider.value) return;
+            oldvalue = slider.value;
+            if (Math.Abs(slider.value) < 0.01f)
+                text.text = "MUTED";
+            else
+                text.text = (int) (slider.value*100) + "%";
         }
 
 
