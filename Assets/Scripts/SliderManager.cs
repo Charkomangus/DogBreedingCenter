@@ -19,7 +19,7 @@ namespace Assets.Scripts
             slider = GetComponent<Slider>();
             slider.value = tag == "Audio" ? temp.SoundManager.AudioVolume : temp.SoundManager.MusicVolume;
             oldvalue = slider.value;
-            if (slider.value < 0.1f)
+            if (Math.Abs(slider.value) < 0.01f)
                 text.text = "MUTED";
             else
                 text.text = (int)(slider.value * 100) + "%";
@@ -28,9 +28,9 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update ()
         {
-            if (Math.Abs(oldvalue - slider.value) > 0.1f)
+            if (Math.Abs(Math.Abs(oldvalue - slider.value)) < 0.01f)
             {
-                if (slider.value < 0.1f)
+                if (Math.Abs(slider.value) < 0.01f)
                     text.text = "MUTED";
                 else
                     text.text = (int) (slider.value*100) + "%";
@@ -52,6 +52,10 @@ namespace Assets.Scripts
         public void RestartLevel()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        public void ExitToMenu()
+        {
+            SceneManager.LoadScene("Menu");
         }
 
     }

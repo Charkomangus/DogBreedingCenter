@@ -79,7 +79,7 @@ namespace Assets.Scripts
         //Awake is always called before any Start functions
         private void Awake()
         {
-            Application.targetFrameRate = 60;
+            
             ShepardCard = (GameObject) Resources.Load("Prefabs/ShepardCard");
             MastiffCard = (GameObject) Resources.Load("Prefabs/MastiffCard");
             PointerCard = (GameObject) Resources.Load("Prefabs/PointerCard");
@@ -145,7 +145,7 @@ namespace Assets.Scripts
         //Initializes the game for each level.
         void InitGame(Scene activeScene)
         {
-            SetBounds();
+           
             Failed = false;
             Victory = false;
             CalculateNextLevel();
@@ -160,7 +160,7 @@ namespace Assets.Scripts
 
             if (_allButtonsinScene.Length > 0)
                 SetUpButtons();
-
+            SetBounds();
             switch (CurrentLevel)
             {
                 case "_Init":
@@ -168,8 +168,11 @@ namespace Assets.Scripts
                     break;
                 case "Menu":
                     //SOUND
-                    SoundManager.PlayBackgroundMusic("Music/menuAmbient.mp3");
+                    SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
                     SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.PlayBackgroundMusic("Music/menuAmbient.mp3");
                     break;
 
                 case "Intro":
@@ -197,6 +200,7 @@ namespace Assets.Scripts
                     ChosenCardPrefab = PointerCard;
                     LoadGameManagers();
                     SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
                     SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
                     SoundManager.PlayBackgroundMusic("Music/Thinking Music.ogg");
 
@@ -211,6 +215,9 @@ namespace Assets.Scripts
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
                     ChosenCardPrefab = PointerCard;
                     LoadGameManagers();
+                    SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music.ogg");
                     break;
                 case "Level2":
 
@@ -221,6 +228,9 @@ namespace Assets.Scripts
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
                     ChosenCardPrefab = MastiffCard;
+                    SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music.ogg");
                     LoadGameManagers();
                     break;
                 case "Level3":
@@ -233,6 +243,9 @@ namespace Assets.Scripts
                     ChosenCardPrefab = ShepardCard;
                     LoadGameManagers();
                     Quiz = GameObject.FindGameObjectWithTag("Quiz").GetComponent<Quiz>();
+                    SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music.ogg");
                     break;
                 case "Quiz1":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
@@ -242,9 +255,12 @@ namespace Assets.Scripts
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue("Quiz1/Introduction");
                     //SOUND
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
-                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
+                
                     QuizManager = GameObject.FindGameObjectWithTag("QuizManager").GetComponent<QuizManager>();
+                    SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
                     break;
                 case "Quiz2":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
@@ -254,9 +270,11 @@ namespace Assets.Scripts
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue("Quiz2/Introduction");
                     //SOUND
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
-                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
                     QuizManager = GameObject.FindGameObjectWithTag("QuizManager").GetComponent<QuizManager>();
+                    SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
                     break;
                
             }
@@ -266,7 +284,8 @@ namespace Assets.Scripts
         //Update is called every frame.
         private void Update()
         {
-
+            if(MinX == 0 || MinY == 0)
+                SetBounds();
             if (Failed && !DialogueManager.IsOpen())
             {
                 Failed = false;
@@ -472,14 +491,14 @@ namespace Assets.Scripts
 
         private void SetBounds()
         {
-            switch (CurrentLevel)
+          switch (CurrentLevel)
             {
 
                 case "Level0":
                     MaxX = 0;
                     MinX = -250;
                     MinY = 0;
-                    MaxY = 100;
+                    MaxY = 150;
                     break;
                 case "Level1":
                     MaxX = 0;
@@ -491,7 +510,7 @@ namespace Assets.Scripts
                     MaxX = 0;
                     MinY = 0;
                     MinX = -500;
-                    MaxY = 350;
+                    MaxY = 500;
                     break;
                 case "Level3":
                     MaxX = 0;
@@ -523,6 +542,7 @@ namespace Assets.Scripts
         {
             yield return new WaitForSeconds(3);
             LOLSDK.Instance.CompleteGame();
+            SceneManager.LoadScene("Menu");
             StopAllCoroutines();
         }
 

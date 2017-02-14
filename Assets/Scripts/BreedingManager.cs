@@ -179,14 +179,14 @@ namespace Assets.Scripts
                             .Contains(_cardSlots.GetComponentsInChildren<CardSlot>()[1].Item))
                     {
                         WarningPanel1.GetComponentInChildren<Text>().text =
-                            "These dogs are siblings! If you breed them you will lose 6% of the genetic diversity!";
+                            "These dogs are siblings! If you breed them you will lose 15% of the genetic diversity!";
                         WarningPanel1.SetActive(true);
                         BreedingType = 1;
                     }
                     else if (_cardSlots.GetComponentsInChildren<CardSlot>()[0].Item.GetComponent<Dog>().ReturnHalfSiblings().Contains(_cardSlots.GetComponentsInChildren<CardSlot>()[1].Item))
                     {
                         WarningPanel1.GetComponentInChildren<Text>().text =
-                            "These dogs are half-siblings! If you breed them you will lose 3% of the genetic diversity!";
+                            "These dogs are half-siblings! If you breed them you will lose 5% of the genetic diversity!";
                         WarningPanel1.SetActive(true);
                         BreedingType = 2;
                     }
@@ -277,10 +277,10 @@ namespace Assets.Scripts
             switch (BreedingType)
             {
                 case 1:
-                    GameManager.Instance.GeneticVarience.value -= 6;
+                    GameManager.Instance.GeneticVarience.value -= 15;
                     break;
                 case 2:
-                    GameManager.Instance.GeneticVarience.value -= 3;
+                    GameManager.Instance.GeneticVarience.value -= 5;
                     break;
             }
             ExitBreedingMenu();
