@@ -34,7 +34,8 @@ public class FinalDog : MonoBehaviour
 	    if (_animator.GetBool("Open") && !_finished)
 	    {
 	        GameManager.Instance.DialogueManager.OpenDialogue(GameManager.Instance.CurrentLevel + "/FinalDog");
-	        GameManager.Instance.Victory = true;
+            GameManager.Instance.SoundManager.PlaySoundEffect("Sound/win.wav");
+            GameManager.Instance.Victory = true;
             _finished = true;
 	    }
 	}
@@ -49,7 +50,8 @@ public class FinalDog : MonoBehaviour
         _statsNumber.text = SetStatNumberText(_finalDog.GetComponent<Dog>());
         _description.text = SetDescriptionText(_finalDog.GetComponent<Dog>());
         _finalDog.GetComponent<Card>().SetImage(finalDogImage);
-    }
+
+}
 
     //Create string with all stats
         private string SetStatText()

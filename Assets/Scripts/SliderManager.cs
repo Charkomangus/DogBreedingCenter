@@ -26,7 +26,7 @@ namespace Assets.Scripts
         }
 	
         // Update is called once per frame
-        void Update ()
+        private void Update ()
         {
             if (oldvalue == slider.value) return;
             oldvalue = slider.value;

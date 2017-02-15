@@ -80,7 +80,7 @@ namespace Assets.Scripts
         //Awake is always called before any Start functions
         private void Awake()
         {
-            
+            Application.targetFrameRate = -1;
             _shepardCard = (GameObject) Resources.Load("Prefabs/ShepardCard");
             _mastiffCard = (GameObject) Resources.Load("Prefabs/MastiffCard");
             _pointerCard = (GameObject) Resources.Load("Prefabs/PointerCard");
@@ -154,7 +154,7 @@ namespace Assets.Scripts
             if (GameObject.FindGameObjectWithTag("Dialogue") != null)
             {
                 DialogueManager = GameObject.FindGameObjectWithTag("Dialogue").GetComponent<DialogueManager>();
-                DialogueManager.Awake();
+                DialogueManager.StartDialogueManager();
             }
 
             _allButtonsinScene = FindObjectsOfType<Button>(); //All Buttons
@@ -416,7 +416,7 @@ namespace Assets.Scripts
         {
             for (int i = 0; i < _allButtonsinScene.Length; i++)
             {
-                _allButtonsinScene[i].onClick.AddListener(() => SoundManager.PlaySoundEffect("Sound/tap.mp3"));
+                _allButtonsinScene[i].onClick.AddListener(() => SoundManager.PlaySoundEffect("Sound/tap.wav"));
             }
 
         }

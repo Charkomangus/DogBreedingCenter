@@ -16,7 +16,7 @@ namespace Assets.Scripts
             _mainMovable = GameObject.FindGameObjectWithTag("Movable").transform;
         }
 
-        // Update is called once per frame
+        //  is called once per frame
         void Update()
         {
             if (pressed)

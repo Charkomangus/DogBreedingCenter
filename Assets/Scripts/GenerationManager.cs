@@ -31,8 +31,7 @@ namespace Assets.Scripts
         }
 
         // Update is called once per frame
-        void Update()
-        {
+        void Update(){
           
             if (_nextGeneration.GetComponent<Generation>().ReturnAvailableSlot() == null)
                 UpdateGeneration();

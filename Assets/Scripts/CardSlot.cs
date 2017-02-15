@@ -12,6 +12,7 @@ namespace Assets.Scripts
         [SerializeField]public float Scale;
         [SerializeField]public bool Disabled;
         private Image image;
+        private Transform _transform;
         public GameObject Item
         {
             get { return transform.childCount > 0 ? transform.GetChild(0).gameObject : null; }
@@ -37,6 +38,8 @@ namespace Assets.Scripts
             DragHandler.ItemBeingDragged = null;
             ExecuteEvents.ExecuteHierarchy<IHasChanged>(gameObject, null, (x, y) => x.HasChanged());
         }
+        #endregion
+
 
         private void Update()
         {
@@ -53,6 +56,6 @@ namespace Assets.Scripts
             }
         }
       
-        #endregion
+      
     }
 }

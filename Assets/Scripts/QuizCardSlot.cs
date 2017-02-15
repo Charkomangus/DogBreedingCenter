@@ -45,7 +45,8 @@ namespace Assets.Scripts
             }
            
             Disabled = true;
-            if(_name!= null)
+            GameManager.Instance.SoundManager.PlaySoundEffect("Sound/ping.wav");
+            if (_name!= null)
                 _name.color = new Color(0,0,0,1);
             DragHandler.ItemBeingDragged.transform.SetParent(transform);
             DragHandler.ItemBeingDragged.transform.localScale = new Vector3(Scale, Scale, 1);

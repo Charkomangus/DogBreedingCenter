@@ -84,7 +84,7 @@ namespace Assets.Scripts
 
         public void SwitchOnTheQuiz(int i)
         {
-            Debug.Log("Hey");
+           
             Quiz[i].GetComponent<Animator>().SetTrigger("Open");
         }
     }

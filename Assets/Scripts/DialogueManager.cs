@@ -30,6 +30,7 @@ namespace Assets.Scripts
         private Polaroid _polaroid;
         [SerializeField]
         private Sprite _oldProffessor;
+
         //>>>TOOLTIPS<<<<<
         private bool _tooltip;
         [SerializeField]private Animator[] _tooltipAnimators;
@@ -37,11 +38,9 @@ namespace Assets.Scripts
         private bool _cardReviewOpen, _breedingMenuOpen;
         private Card _randomDog;
         //>>>TOOLTIPS<<<<<
-
-
+        
       
-        //Set variables
-        public void Awake()
+        public void StartDialogueManager()
         {
             _letterPause = 0.04f;
             _dialogue = GetComponentInChildren<Text>();
@@ -71,10 +70,7 @@ namespace Assets.Scripts
                 }
             }
             _originalLetterPauseValue = _letterPause;
-        }
 
-        private void Start()
-        {
             if (GameObject.FindGameObjectWithTag("Polaroid") != null)
                 _polaroid = GameObject.FindGameObjectWithTag("Polaroid").GetComponent<Polaroid>();
           
@@ -149,7 +145,7 @@ namespace Assets.Scripts
             _index++;
             _message = LoadText(_filepath + _index);
 
-            GameManager.Instance.SoundManager.PlaySoundEffect("Sound/tap.mp3");
+            GameManager.Instance.SoundManager.PlaySoundEffect("Sound/tap.wav");
             if (_message == null)
             {
                 CloseDialogue();
@@ -265,12 +261,11 @@ namespace Assets.Scripts
         public void OnPointerDown(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Right) return;
-            if (Input.touchCount != 1) return;
             if (!_speedUp)
             {
                 _speedUp = true;
                 _arrow.SetBool("Open", false);
-                _letterPause /= 10;
+                _letterPause /= 5;
             }
 
 
@@ -387,7 +382,11 @@ namespace Assets.Scripts
                 case '@':
                     GameManager.Instance.QuizManager.SwitchOnTheQuiz(1);
                     break;
-
+                case '?':
+                    _tooltip = true;
+                    _tooltipAnimators = GameObject.FindGameObjectWithTag("Tooltip").GetComponent<Tooltip>().ReturnTooltips();
+                    _proffessorAnimator.SetBool("Open", false);
+                    break;
 
             }
         }
