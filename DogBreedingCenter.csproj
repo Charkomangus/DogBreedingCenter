@@ -164,6 +164,7 @@
     <None Include="Assets\Resources\Level1\Introduction1.txt" />
     <None Include="Assets\Resources\Level1\Introduction2.txt" />
     <None Include="Assets\Resources\Level1\Introduction3.txt" />
+    <None Include="Assets\Resources\Level1\Introduction4.txt" />
     <None Include="Assets\Resources\Level1\MissionObjective0.txt" />
     <None Include="Assets\Resources\Level1\MissionObjective1.txt" />
     <None Include="Assets\Resources\Level1\MissionObjective2.txt" />

@@ -112,13 +112,13 @@ namespace Assets.Scripts
         {
             System.Text.StringBuilder statsBuilder = new System.Text.StringBuilder();
             statsBuilder.Append(_dog.ReturnName() + " is a " + _dog.ReturnSex().ToLower() + ", " +_dog.ReturnSizeDescription().ToLower() + " sized dog with a " +_dog.ReturnHairLengthDescription().ToLower() + " length " + "coat." +Environment.NewLine + Environment.NewLine);
-       
+            statsBuilder.Append("Intelligence : " + _dog.ReturnIntelligence() / 10 + "/10" + Environment.NewLine);
+            statsBuilder.Append("Endurance: " + _dog.ReturnEndurance() / 10 + "/10" + Environment.NewLine);
             statsBuilder.Append("Demeanor: "  + _dog.ReturnDemeanor() / 10 + "/10" + Environment.NewLine);
-            statsBuilder.Append("Intelligence : " + _dog.ReturnIntelligence () / 10 + "/10" + Environment.NewLine);
-            statsBuilder.Append("Endurance: "  + _dog.ReturnEndurance() / 10 + "/10" + Environment.NewLine);
+            statsBuilder.Append("Strength: " + _dog.ReturnStrength() / 10 + "/10" + Environment.NewLine);
+            statsBuilder.Append("Hearing: " + _dog.ReturnHearing() / 10 + "/10" + Environment.NewLine);
             statsBuilder.Append("Scent: " + _dog.ReturnScent() / 10 + "/10" + Environment.NewLine);
             statsBuilder.Append("Sight: " + _dog.ReturnSight() / 10 + "/10" + Environment.NewLine);
-            statsBuilder.Append("Hearing: " + _dog.ReturnHearing() / 10 + "/10" + Environment.NewLine);
             statsBuilder.Append("Bark: " +  _dog.ReturnBark() / 10 + "/10" + Environment.NewLine);
             return statsBuilder.ToString();
         }

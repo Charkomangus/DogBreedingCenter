@@ -1,4 +1,6 @@
 REQUIREMENTS:
 Intelligence:
-Sight:
 Demeanor:
+Sight:
+Bark:
+

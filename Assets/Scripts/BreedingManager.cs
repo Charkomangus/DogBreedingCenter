@@ -43,12 +43,9 @@ namespace Assets.Scripts
             if (_increase == 0)
                 _decrease = 20;
 
-            if (GameManager.Instance.CurrentLevel != "Level1")
-            {
-                _firstBirthDone = true;
-                _secondBirthDone = true;
-            }
-
+            if (GameManager.Instance.CurrentLevel == "Level1") return;
+            _firstBirthDone = true;
+            _secondBirthDone = GameManager.Instance.CurrentLevel != "Level2";
         }
 
         #region IHasChanged implementation
@@ -74,6 +71,7 @@ namespace Assets.Scripts
 
                     statsBuilder.Append("Intelligence : " + Environment.NewLine);
                     statsBuilder.Append("Endurance: " + Environment.NewLine);
+                    statsBuilder.Append("Strength: " + Environment.NewLine);
                     statsBuilder.Append("Demeanor: " + Environment.NewLine);
                     statsBuilder.Append("Hearing: " + Environment.NewLine);
                     statsBuilder.Append("Scent: " + Environment.NewLine);
@@ -82,20 +80,14 @@ namespace Assets.Scripts
 
 
 
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnIntelligence()/10 + "/10" +
-                                               Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnEndurance()/10 + "/10" +
-                                               Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnDemeanor()/10 + "/10" +
-                                               Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnHearing()/10 + "/10" +
-                                               Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnScent()/10 + "/10" +
-                                               Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnSight()/10 + "/10" +
-                                               Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnBark()/10 + "/10" +
-                                               Environment.NewLine);
+                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnIntelligence()/10 + "/10" +Environment.NewLine);
+                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnEndurance()/10 + "/10" +Environment.NewLine);
+                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnStrength() / 10 + "/10" +Environment.NewLine);
+                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnDemeanor()/10 + "/10" +Environment.NewLine);
+                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnHearing()/10 + "/10" +Environment.NewLine);
+                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnScent()/10 + "/10" +Environment.NewLine);
+                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnSight()/10 + "/10" +Environment.NewLine);
+                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnBark()/10 + "/10" +Environment.NewLine);
 
 
 

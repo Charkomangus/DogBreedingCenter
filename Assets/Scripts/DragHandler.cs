@@ -155,8 +155,8 @@ namespace Assets.Scripts
             holdTime = endTime - startTime;
             if (holdTime > MaxTime && ItemBeingDragged == null)
             {
-                if(_card!= null)
-                _card.OpenCardReview();
+                if(_card!= null && transform.parent.tag != "PuppySlots")
+                    _card.OpenCardReview();
             }
             else
             {

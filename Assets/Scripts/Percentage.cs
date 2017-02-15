@@ -11,15 +11,17 @@ namespace Assets.Scripts
 
         public int value, oldValue;
      [SerializeField]private Text _percentageText;
+        private Slider _slider;
         private int GeneticDiveristyLevel;
         // Use this for initialization
         void Start ()
         {
+            _slider = GetComponent<Slider>();
             _percentageText = GetComponentInChildren<Text>();
             value = 100;
             oldValue = 100;
-            GetComponent<Slider>().normalizedValue = 100;
-            GetComponent<Slider>().value = 100;
+            _slider.normalizedValue = 100;
+            _slider.value = 100;
             _percentageText.text = value.ToString(CultureInfo.CurrentCulture) + "%";
         }
 	
@@ -29,9 +31,10 @@ namespace Assets.Scripts
             if (value != oldValue)
             {
                 GameManager.Instance.GeneticVarienceWarnings();
-                oldValue = value;
-                GetComponent<Slider>().value = value;
+                _slider.value = value;
+                _slider.normalizedValue = value;
                 _percentageText.text = value.ToString(CultureInfo.CurrentCulture) + "%";
+                oldValue = value;
             }
         }
     }

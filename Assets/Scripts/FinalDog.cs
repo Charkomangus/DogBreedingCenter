@@ -60,6 +60,7 @@ public class FinalDog : MonoBehaviour
             statsBuilder.Append("Intelligence : "  + Environment.NewLine);
             statsBuilder.Append("Endurance: " + Environment.NewLine);
             statsBuilder.Append("Demeanor: " + Environment.NewLine);
+            statsBuilder.Append("Strength: " + Environment.NewLine);
             statsBuilder.Append("Hearing: " + Environment.NewLine);
             statsBuilder.Append("Scent: " + Environment.NewLine);
             statsBuilder.Append("Sight: " + Environment.NewLine);
@@ -86,6 +87,7 @@ public class FinalDog : MonoBehaviour
             statsNumbersBuilder.Append(_dog.ReturnIntelligence() / 10 + "/10 (" + _dog.ReturnIntelligenceDescription() + ")  " + Environment.NewLine);
             statsNumbersBuilder.Append(_dog.ReturnEndurance() / 10 + "/10 (" + _dog.ReturnEnduranceDescription() + ")  " + Environment.NewLine);
             statsNumbersBuilder.Append(_dog.ReturnDemeanor() / 10 + "/10 (" + _dog.ReturnDemeanorDescription() + ")  " + Environment.NewLine);
+            statsNumbersBuilder.Append(_dog.ReturnStrength() / 10 + "/10 (" + _dog.ReturnStrengthDescription() + ")  " + Environment.NewLine);
             statsNumbersBuilder.Append(_dog.ReturnHearing() / 10 + "/10 (" + _dog.ReturnHearingDescription() + ")  " + Environment.NewLine);
             statsNumbersBuilder.Append(_dog.ReturnScent() / 10 + "/10 (" + _dog.ReturnScentDescription() + ")  " + Environment.NewLine);
             statsNumbersBuilder.Append(_dog.ReturnSight() / 10 + "/10 (" + _dog.ReturnSightDescription() + ")  " + Environment.NewLine);

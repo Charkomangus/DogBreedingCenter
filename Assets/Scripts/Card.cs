@@ -11,8 +11,7 @@ namespace Assets.Scripts
     {
        
         [SerializeField]private Transform _parent;
-        private CardSlot _parentCardSlot;
-        private CanvasGroup _canvasGroup;
+        [SerializeField]private CanvasGroup _canvasGroup;
         [SerializeField]private Text _name;
         [SerializeField]private Text _stats;
         [SerializeField]private Text _numbers;
@@ -34,7 +33,7 @@ namespace Assets.Scripts
             _reviewButton = GetComponentInChildren<Button>().GetComponent<CanvasGroup>();
             _dog = GetComponent<Dog>();
             _parent = transform.parent;
-            _parentCardSlot = _parent.GetComponent<CardSlot>();
+         
             _name.text = GetComponent<Dog>().ReturnName();
             _stats.text = SetStats();
             _numbers.text = SetStatNumberText();
@@ -46,31 +45,36 @@ namespace Assets.Scripts
         // Update is called once per frame
         private void Update()
         {
-         
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
             if (transform.parent.tag == "breedingSlotHolder" || transform.parent.tag == "Holder" ||
                 transform.parent.tag == "cardHolder" || transform.parent.tag == "cardReviewSlot" ||
                 transform.parent.tag == "FinalDogSlot" ||
-                transform.parent.tag == "PuppySlots")
+                transform.parent.tag == "PuppySlots" )
             {
                 _reviewButton.interactable = false;
                 _reviewButton.blocksRaycasts = false;
                 _reviewButton.alpha = 0;
-               
+                _canvasGroup.alpha = 1;
             }
-            else
+            else if (_parent.GetComponent<CardSlot>().Disabled)
             {
+                _canvasGroup.alpha = 0.75f;
                 _reviewButton.interactable = true;
                 _reviewButton.blocksRaycasts = true;
                 _reviewButton.alpha = 1;
                 _parent = transform.parent;
-                _canvasGroup.blocksRaycasts = !_parentCardSlot.Disabled;
             }
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
-            if (_parentCardSlot == null) return;
-            if (_parentCardSlot.Disabled)
-                _canvasGroup.alpha = 0.5f;
             else
+            {
                 _canvasGroup.alpha = 1;
+                _reviewButton.interactable = true;
+                _reviewButton.blocksRaycasts = true;
+                _reviewButton.alpha = 1;
+                _parent = transform.parent;
+            }
+        
+
+
         }
 
         //Create string with all stats
@@ -81,12 +85,16 @@ namespace Assets.Scripts
             if (_dog.ReturnIntelligence() >= 60)statsNumbersBuilder.Append(_dog.ReturnIntelligence() / 10 + "/10" + Environment.NewLine);
             if (_dog.ReturnEndurance() >= 60)statsNumbersBuilder.Append(_dog.ReturnEndurance() / 10 + "/10" + Environment.NewLine);
             if (_dog.ReturnDemeanor() >= 60)statsNumbersBuilder.Append(_dog.ReturnDemeanor() / 10 + "/10" + Environment.NewLine);
+            if (_dog.ReturnStrength() >= 60)statsNumbersBuilder.Append(_dog.ReturnStrength() / 10 + "/10" + Environment.NewLine);
             if (_dog.ReturnHearing() >= 60) statsNumbersBuilder.Append(_dog.ReturnHearing() / 10 + "/10" + Environment.NewLine);
             if (_dog.ReturnScent() >= 60)statsNumbersBuilder.Append(_dog.ReturnScent() / 10 + "/10" + Environment.NewLine);
             if (_dog.ReturnSight() >= 60)statsNumbersBuilder.Append(_dog.ReturnSight() / 10 + "/10" + Environment.NewLine);
             if (_dog.ReturnBark() >= 60)statsNumbersBuilder.Append(_dog.ReturnBark() / 10 + "/10" + Environment.NewLine);
+
             return statsNumbersBuilder.ToString();
         }
+     
+     
         //Use dog componment to populate the text describing the card
         public string SetStats()
         {
@@ -98,6 +106,8 @@ namespace Assets.Scripts
                 statsBuilder.Append("Endurance:" + Environment.NewLine);
             if (_dog.ReturnDemeanor() >= 60)
                 statsBuilder.Append("Demeanor:" + Environment.NewLine);
+            if (_dog.ReturnStrength() >= 60)
+                statsBuilder.Append("Strength:" + Environment.NewLine);
             if (_dog.ReturnHearing() >= 60)
                 statsBuilder.Append("Hearing:" + Environment.NewLine);
             if (_dog.ReturnScent() >= 60)
@@ -115,7 +125,7 @@ namespace Assets.Scripts
         public void ReturnToParent()
         {
 
-            if (_parentCardSlot.Item != null)
+            if (_parent.GetComponent<CardSlot>().Item != null)
             {
                 CardSlot[] cardSlots =GameManager.Instance.GenerationManager.ReturnCurrentGeneration().ReturnCardSlots();
                 for (int i = 0; i < cardSlots.Length; i++)

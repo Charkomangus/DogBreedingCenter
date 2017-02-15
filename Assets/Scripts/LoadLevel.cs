@@ -12,7 +12,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update ()
         {
-            SceneManager.LoadScene(GameManager.Instance.Failed ? SceneManager.GetActiveScene().name : _levelName);
+            SceneManager.LoadScene(GameManager.Instance.ReturnFailStatus() ? SceneManager.GetActiveScene().name : _levelName);
         }
     }
 }

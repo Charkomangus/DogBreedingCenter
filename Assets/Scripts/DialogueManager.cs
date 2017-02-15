@@ -265,7 +265,7 @@ namespace Assets.Scripts
         public void OnPointerDown(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Right) return;
-           
+            if (Input.touchCount != 1) return;
             if (!_speedUp)
             {
                 _speedUp = true;

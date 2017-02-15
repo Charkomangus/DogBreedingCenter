@@ -60,7 +60,7 @@ namespace Assets.Scripts
                     GameManager.Instance.DialogueManager.OpenDialogue(GameManager.Instance.CurrentLevel + "/Fail");
                     failed = true;
                 }
-                GameManager.Instance.Failed = true;
+                GameManager.Instance.SetFailStatus(true);
             }
             else
             {

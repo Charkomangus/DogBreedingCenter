@@ -18,7 +18,7 @@ namespace Assets.Scripts
 
 
         //>>>BUTTONS<<<
-        [SerializeField] private Button[] _allButtonsinScene;
+        private Button[] _allButtonsinScene;
         //>>>BUTTONS<<<
 
         //>>>>MANAGERS<<<<
@@ -48,7 +48,7 @@ namespace Assets.Scripts
 
         //>>>>WARNINGS<<<<
         private bool _first, _second, _third;
-        public bool Failed;
+        private bool _failed;
         //>>>>WARNINGS<<<<
 
 
@@ -60,7 +60,8 @@ namespace Assets.Scripts
         //>>>VARIABLES<<<<
 
         //>>>PREFABS<<<<
-        public GameObject ShepardCard, MastiffCard, PointerCard, CatCard, ChosenCardPrefab;
+        private GameObject _shepardCard, _mastiffCard, _pointerCard;
+        public GameObject ChosenCardPrefab;
         //>>>PREFABS<<<<
 
         //>>>INTRO<<<<
@@ -80,10 +81,10 @@ namespace Assets.Scripts
         private void Awake()
         {
             
-            ShepardCard = (GameObject) Resources.Load("Prefabs/ShepardCard");
-            MastiffCard = (GameObject) Resources.Load("Prefabs/MastiffCard");
-            PointerCard = (GameObject) Resources.Load("Prefabs/PointerCard");
-            CatCard = (GameObject) Resources.Load("Prefabs/BobCatCard");
+            _shepardCard = (GameObject) Resources.Load("Prefabs/ShepardCard");
+            _mastiffCard = (GameObject) Resources.Load("Prefabs/MastiffCard");
+            _pointerCard = (GameObject) Resources.Load("Prefabs/PointerCard");
+      
 
             // if the singleton hasn't been initialized yet
             if (_instance != null && _instance != this || LOLSDK.Instance.IsInitialized)
@@ -146,7 +147,7 @@ namespace Assets.Scripts
         void InitGame(Scene activeScene)
         {
            
-            Failed = false;
+            _failed = false;
             Victory = false;
             CalculateNextLevel();
 
@@ -157,9 +158,10 @@ namespace Assets.Scripts
             }
 
             _allButtonsinScene = FindObjectsOfType<Button>(); //All Buttons
-
+          
             if (_allButtonsinScene.Length > 0)
                 SetUpButtons();
+        
             SetBounds();
             switch (CurrentLevel)
             {
@@ -196,7 +198,7 @@ namespace Assets.Scripts
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
-                    ChosenCardPrefab = PointerCard;
+                    ChosenCardPrefab = _pointerCard;
                     LoadGameManagers();
                     SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
@@ -212,7 +214,7 @@ namespace Assets.Scripts
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
-                    ChosenCardPrefab = PointerCard;
+                    ChosenCardPrefab = _pointerCard;
                     LoadGameManagers();
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
                     SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
@@ -226,7 +228,7 @@ namespace Assets.Scripts
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
-                    ChosenCardPrefab = MastiffCard;
+                    ChosenCardPrefab = _mastiffCard;
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
                     SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
                     SoundManager.PlayBackgroundMusic("Music/Thinking Music.ogg");
@@ -239,7 +241,7 @@ namespace Assets.Scripts
                     Fade = GameObject.FindGameObjectWithTag("FinalFade").GetComponent<Animator>();
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
-                    ChosenCardPrefab = ShepardCard;
+                    ChosenCardPrefab = _shepardCard;
                     LoadGameManagers();
                     Quiz = GameObject.FindGameObjectWithTag("Quiz").GetComponent<Quiz>();
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
@@ -285,9 +287,9 @@ namespace Assets.Scripts
         {
             if(MinX == 0 || MinY == 0)
                 SetBounds();
-            if (Failed && !DialogueManager.IsOpen())
+            if (_failed && !DialogueManager.IsOpen())
             {
-                Failed = false;
+                _failed = false;
                 StartCoroutine(LoadLevel());
                 Fade.SetBool("Open", true);
             }
@@ -345,7 +347,8 @@ namespace Assets.Scripts
                     if (DialogueManager.IsOpen() == false && Victory)
                     {
                         Victory = false;
-                        SceneManager.LoadScene("Quiz2");
+                        StartCoroutine(LoadNextLevel());
+                        Fade.SetBool("Open", true);
                     }
 
                     break;
@@ -353,8 +356,9 @@ namespace Assets.Scripts
                     if (DialogueManager.IsOpen() == false && Victory)
                     {
                         Victory = false;
-                        StartCoroutine(EndGame());
                         Fade.SetBool("Open", true);
+                        StartCoroutine(EndGame());
+                       
                     }
 
                     break;
@@ -369,10 +373,10 @@ namespace Assets.Scripts
             if (GeneticVarience == null || Victory) return;
 
 
-            if (GeneticVarience.value <= 10 && !Failed)
+            if (GeneticVarience.value <= 10 && !_failed)
             {
                 DialogueManager.OpenDialogue("GeneticWarning10");
-                Failed = true;
+                _failed = true;
             }
             else if (GeneticVarience.value <= 25 && !_third)
             {
@@ -414,15 +418,15 @@ namespace Assets.Scripts
             {
                 _allButtonsinScene[i].onClick.AddListener(() => SoundManager.PlaySoundEffect("Sound/tap.mp3"));
             }
+
         }
-
-       
-
+     
 
 
         //Checks to see if any dogs fit the final dog criteria
         public bool IsFinalDog(Dog puppy)
         {
+            if (Victory) return false;
             switch (CurrentLevel)
             {
                 case "Level0":
@@ -434,19 +438,18 @@ namespace Assets.Scripts
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     LOLSDK.Instance.SubmitProgress(0, 5, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnEndurance() > 70 && puppy.ReturnBark() > 60 &&
-                           puppy.ReturnScent() > 70;
+                    return puppy.ReturnEndurance() > 70 && puppy.ReturnBark() > 60 &&  puppy.ReturnBark() > 60 &&puppy.ReturnScent() > 70;
                 case "Level2":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     LOLSDK.Instance.SubmitProgress(0, 7, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnIntelligence() > 70 && puppy.ReturnSight() > 70 && puppy.ReturnDemeanor() > 70;
+                    return puppy.ReturnIntelligence() > 70 && puppy.ReturnDemeanor() > 70 && puppy.ReturnSight() > 80 && puppy.ReturnBark() > 60;
                 case "Level3":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
                     LOLSDK.Instance.SubmitProgress(0, 9, 12);
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnIntelligence () > 80 && puppy.ReturnEndurance() > 70 && puppy.ReturnScent() > 80 &&
-                           puppy.ReturnDemeanor() > 60;
+                    return puppy.ReturnIntelligence () > 90 && puppy.ReturnEndurance() > 70 && puppy.ReturnScent() > 60 &&
+                           puppy.ReturnDemeanor() > 80;
                 default:
                     return false;
             }
@@ -497,25 +500,25 @@ namespace Assets.Scripts
                     MaxX = 0;
                     MinX = -250;
                     MinY = 0;
-                    MaxY = 150;
+                    MaxY = 200;
                     break;
                 case "Level1":
                     MaxX = 0;
                     MinY = 0;
                     MinX = -300;
-                    MaxY = 250;
+                    MaxY = 300;
                     break;
                 case "Level2":
                     MaxX = 0;
                     MinY = 0;
                     MinX = -500;
-                    MaxY = 500;
+                    MaxY = 550;
                     break;
                 case "Level3":
                     MaxX = 0;
                     MinY = 0;
                     MinX = -600;
-                    MaxY = 500;
+                    MaxY = 750;
                     break;
             }
         }
@@ -541,12 +544,24 @@ namespace Assets.Scripts
         {
             yield return new WaitForSeconds(3);
             LOLSDK.Instance.CompleteGame();
+            LOLSDK.Instance.StopSound("Music/Thinking Music(short).ogg");
+            yield return new WaitForSeconds(3);
             SceneManager.LoadScene("Menu");
             StopAllCoroutines();
         }
 
 
-       
+        public void SetFailStatus(bool status)
+        {
+            _failed = status;
+        }
+
+        public bool ReturnFailStatus()
+        {
+           return _failed;
+        }
+
+
     }
 
 }

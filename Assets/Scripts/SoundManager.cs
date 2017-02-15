@@ -30,7 +30,10 @@ namespace Assets.Scripts
 
         public void SetVolume()
         {
-            LOLSDK.Instance.ConfigureSound(AudioVolume, MusicVolume, Math.Abs(MusicVolume) < 0.1f ? 0 : FadedMusicVolume);
+            if(Math.Abs(AudioVolume) < 0.01f || Math.Abs(MusicVolume) < 0.01f)
+                LOLSDK.Instance.ConfigureSound(AudioVolume, MusicVolume, 0);
+            else
+                LOLSDK.Instance.ConfigureSound(AudioVolume, MusicVolume, FadedMusicVolume);
         }
 
         //Control Volume
