@@ -12,7 +12,7 @@ namespace Assets.Scripts
         private float oldvalue;
         [SerializeField] private Text text;
         // Use this for initialization
-        void Start ()
+        void Awake ()
         {
 
             GameManager temp = FindObjectOfType<GameManager>();
@@ -50,11 +50,13 @@ namespace Assets.Scripts
         }
         public void RestartLevel()
         {
+            GameManager.Instance.SoundManager.StopAllPreviousMusic();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         public void ExitToMenu()
         {
             SceneManager.LoadScene("Menu");
+          
         }
 
     }

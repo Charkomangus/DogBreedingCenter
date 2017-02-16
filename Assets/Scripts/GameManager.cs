@@ -13,8 +13,9 @@ namespace Assets.Scripts
     public class GameManager : MonoBehaviour
     {
         //>>>>FONT<<<<<
-        [SerializeField] public bool TutorialEnabled;
-      //>>>>FONT<<<<<
+        [SerializeField]
+        public bool TutorialEnabled;
+        //>>>>FONT<<<<<
 
 
         //>>>BUTTONS<<<
@@ -81,15 +82,16 @@ namespace Assets.Scripts
         private void Awake()
         {
             Application.targetFrameRate = -1;
-            _shepardCard = (GameObject) Resources.Load("Prefabs/ShepardCard");
-            _mastiffCard = (GameObject) Resources.Load("Prefabs/MastiffCard");
-            _pointerCard = (GameObject) Resources.Load("Prefabs/PointerCard");
-      
+            _shepardCard = (GameObject)Resources.Load("Prefabs/ShepardCard");
+            _mastiffCard = (GameObject)Resources.Load("Prefabs/MastiffCard");
+            _pointerCard = (GameObject)Resources.Load("Prefabs/PointerCard");
+
 
             // if the singleton hasn't been initialized yet
             if (_instance != null && _instance != this || LOLSDK.Instance.IsInitialized)
             {
                 Destroy(gameObject);
+                DialogueManager.Awake();
             }
 
             _instance = this;
@@ -107,7 +109,7 @@ namespace Assets.Scripts
 
             //Call the InitGame function to initialize the first level 
             InitGame(SceneManager.GetActiveScene());
-        
+
             SetBounds();
         }
 
@@ -118,17 +120,17 @@ namespace Assets.Scripts
             switch (gameState)
             {
                 case LoLSDK.GameState.Paused:
-                {
+                    {
 
-                    Time.timeScale = 0;
+                        Time.timeScale = 0;
 
-                }
+                    }
                     break;
 
                 case LoLSDK.GameState.Resumed:
-                {
-                    Time.timeScale = 1;
-                }
+                    {
+                        Time.timeScale = 1;
+                    }
                     break;
             }
         }
@@ -144,9 +146,9 @@ namespace Assets.Scripts
 
 
         //Initializes the game for each level.
-        void InitGame(Scene activeScene)
+        public void InitGame(Scene activeScene)
         {
-           
+
             _failed = false;
             Victory = false;
             CalculateNextLevel();
@@ -154,14 +156,14 @@ namespace Assets.Scripts
             if (GameObject.FindGameObjectWithTag("Dialogue") != null)
             {
                 DialogueManager = GameObject.FindGameObjectWithTag("Dialogue").GetComponent<DialogueManager>();
-                DialogueManager.StartDialogueManager();
+                DialogueManager.Awake();
             }
 
             _allButtonsinScene = FindObjectsOfType<Button>(); //All Buttons
-          
+
             if (_allButtonsinScene.Length > 0)
                 SetUpButtons();
-        
+            SoundManager.StopAllPreviousMusic();
             SetBounds();
             switch (CurrentLevel)
             {
@@ -170,6 +172,9 @@ namespace Assets.Scripts
                     break;
                 case "Menu":
                     //SOUND
+                    SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
                     SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
                     SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
@@ -186,6 +191,7 @@ namespace Assets.Scripts
                         DialogueManager.OpenDialogue("Introduction/Introduction");
                     //SOUND
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
                     SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
                     break;
 
@@ -256,7 +262,7 @@ namespace Assets.Scripts
                     if (!DialogueManager.IsOpen() && TutorialEnabled)
                         DialogueManager.OpenDialogue("Quiz1/Introduction");
                     //SOUND
-                
+
                     QuizManager = GameObject.FindGameObjectWithTag("QuizManager").GetComponent<QuizManager>();
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
                     SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
@@ -272,12 +278,14 @@ namespace Assets.Scripts
                         DialogueManager.OpenDialogue("Quiz2/Introduction");
                     //SOUND
                     QuizManager = GameObject.FindGameObjectWithTag("QuizManager").GetComponent<QuizManager>();
+                 
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
                     SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
                     SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
+
                     break;
-               
+
             }
         }
 
@@ -285,7 +293,7 @@ namespace Assets.Scripts
         //Update is called every frame.
         private void Update()
         {
-            if(MinX == 0 || MinY == 0)
+            if (MinX == 0 || MinY == 0)
                 SetBounds();
             if (_failed && !DialogueManager.IsOpen())
             {
@@ -309,6 +317,9 @@ namespace Assets.Scripts
                 case "Level0":
                     if (DialogueManager.IsOpen() == false && Victory)
                     {
+                        //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                        LOLSDK.Instance.SubmitProgress(0, 3, 12);
+                        //>>>>>>SDK UPDATE<<<<<<<<<<<<
                         Victory = false;
                         StartCoroutine(LoadNextLevel());
                         Fade.SetBool("Open", true);
@@ -319,6 +330,9 @@ namespace Assets.Scripts
                 case "Level1":
                     if (DialogueManager.IsOpen() == false && Victory)
                     {
+                        //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                        LOLSDK.Instance.SubmitProgress(0, 5, 12);
+                        //>>>>>>SDK UPDATE<<<<<<<<<<<<
                         Victory = false;
                         StartCoroutine(LoadNextLevel());
                         Fade.SetBool("Open", true);
@@ -328,6 +342,9 @@ namespace Assets.Scripts
                 case "Level2":
                     if (DialogueManager.IsOpen() == false && Victory)
                     {
+                        //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                        LOLSDK.Instance.SubmitProgress(0, 7, 12);
+                        //>>>>>>SDK UPDATE<<<<<<<<<<<<
                         Victory = false;
                         StartCoroutine(LoadNextLevel());
                         Fade.SetBool("Open", true);
@@ -337,6 +354,10 @@ namespace Assets.Scripts
                 case "Level3":
                     if (DialogueManager.IsOpen() == false && Victory)
                     {
+                       
+                        //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                        LOLSDK.Instance.SubmitProgress(0, 9, 12);
+                        //>>>>>>SDK UPDATE<<<<<<<<<<<<
                         Victory = false;
                         StartCoroutine(LoadNextLevel());
                         Fade.SetBool("Open", true);
@@ -358,7 +379,7 @@ namespace Assets.Scripts
                         Victory = false;
                         Fade.SetBool("Open", true);
                         StartCoroutine(EndGame());
-                       
+
                     }
 
                     break;
@@ -373,22 +394,22 @@ namespace Assets.Scripts
             if (GeneticVarience == null || Victory) return;
 
 
-            if (GeneticVarience.value <= 10 && !_failed)
+            if (GeneticVarience.Value <= 10 && !_failed)
             {
                 DialogueManager.OpenDialogue("GeneticWarning10");
                 _failed = true;
             }
-            else if (GeneticVarience.value <= 25 && !_third)
+            else if (GeneticVarience.Value <= 25 && !_third)
             {
                 _third = true;
                 DialogueManager.OpenDialogue("GeneticWarning25");
             }
-            else if (GeneticVarience.value <= 50 && !_second)
+            else if (GeneticVarience.Value <= 50 && !_second)
             {
                 _second = true;
                 DialogueManager.OpenDialogue("GeneticWarning50");
             }
-            else if (GeneticVarience.value <= 75 && !_first)
+            else if (GeneticVarience.Value <= 75 && !_first)
             {
                 _first = true;
                 DialogueManager.OpenDialogue("GeneticWarning75");
@@ -420,7 +441,7 @@ namespace Assets.Scripts
             }
 
         }
-     
+
 
 
         //Checks to see if any dogs fit the final dog criteria
@@ -430,25 +451,17 @@ namespace Assets.Scripts
             switch (CurrentLevel)
             {
                 case "Level0":
-                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 3, 12);
-                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnIntelligence () > 60 && puppy.ReturnScent() > 70;
+                  
+                    return puppy.ReturnIntelligence() > 60 && puppy.ReturnScent() > 70;
                 case "Level1":
-                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 5, 12);
-                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnEndurance() > 70 && puppy.ReturnBark() > 60 &&  puppy.ReturnBark() > 60 &&puppy.ReturnScent() > 70;
+                  
+                    return puppy.ReturnEndurance() > 70 && puppy.ReturnBark() > 60 && puppy.ReturnScent() > 70;
                 case "Level2":
-                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 7, 12);
-                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
+                  
                     return puppy.ReturnIntelligence() > 70 && puppy.ReturnDemeanor() > 70 && puppy.ReturnSight() > 80 && puppy.ReturnBark() > 60;
                 case "Level3":
-                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    LOLSDK.Instance.SubmitProgress(0, 9, 12);
-                    //>>>>>>SDK UPDATE<<<<<<<<<<<<
-                    return puppy.ReturnIntelligence () > 90 && puppy.ReturnEndurance() > 70 && puppy.ReturnScent() > 60 &&
+                  
+                    return puppy.ReturnIntelligence() > 90 && puppy.ReturnEndurance() > 70 && puppy.ReturnScent() > 60 &&
                            puppy.ReturnDemeanor() > 80;
                 default:
                     return false;
@@ -493,7 +506,7 @@ namespace Assets.Scripts
 
         private void SetBounds()
         {
-          switch (CurrentLevel)
+            switch (CurrentLevel)
             {
 
                 case "Level0":
@@ -532,7 +545,7 @@ namespace Assets.Scripts
             StopAllCoroutines();
         }
 
-      
+
         private IEnumerator LoadLevel()
         {
             yield return new WaitForSeconds(3);
@@ -558,10 +571,11 @@ namespace Assets.Scripts
 
         public bool ReturnFailStatus()
         {
-           return _failed;
+            return _failed;
         }
 
 
     }
 
 }
+

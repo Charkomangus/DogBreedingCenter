@@ -5,6 +5,7 @@ using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 using LoLSDK;
+using Random = UnityEngine.Random;
 
 
 public class FinalDog : MonoBehaviour
@@ -34,7 +35,7 @@ public class FinalDog : MonoBehaviour
 	    if (_animator.GetBool("Open") && !_finished)
 	    {
 	        GameManager.Instance.DialogueManager.OpenDialogue(GameManager.Instance.CurrentLevel + "/FinalDog");
-            GameManager.Instance.SoundManager.PlaySoundEffect("Sound/win.wav");
+            GameManager.Instance.SoundManager.PlaySoundEffect(Random.Range(0, 2) == 0 ? "Sound/Bark.wav" : "Sound/doubleBark.wav");
             GameManager.Instance.Victory = true;
             _finished = true;
 	    }
@@ -72,11 +73,39 @@ public class FinalDog : MonoBehaviour
         //Create string with all stats
         private string SetDescriptionText(Dog dog)
         {
-            System.Text.StringBuilder descriptionBuilder = new System.Text.StringBuilder();
-            descriptionBuilder.Append(dog.ReturnName() + " is a " + dog.ReturnSex().ToLower() + ", " +dog.ReturnSizeDescription().ToLower() + " sized dog with a " +
-                                      dog.ReturnHairLengthDescription().ToLower() + " length " + "coat." +Environment.NewLine + Environment.NewLine);
-            return descriptionBuilder.ToString();
-
+            switch (GameManager.Instance.CurrentLevel)
+            {
+                case "Level0":
+                {
+                    System.Text.StringBuilder descriptionBuilder = new System.Text.StringBuilder();
+                    descriptionBuilder.Append(dog.ReturnName() + " is a " + dog.ReturnSex().ToLower() + ", medium sized dog with a short length coat." + Environment.NewLine);
+                    return descriptionBuilder.ToString();
+                }
+                case "Level1":
+                {
+                    System.Text.StringBuilder descriptionBuilder = new System.Text.StringBuilder();
+                    descriptionBuilder.Append(dog.ReturnName() + " is a " + dog.ReturnSex().ToLower() +", medium sized dog with a short length coat." + Environment.NewLine);
+                    return descriptionBuilder.ToString();
+                }
+                case "Level2":
+                {
+                    System.Text.StringBuilder descriptionBuilder = new System.Text.StringBuilder();
+                    descriptionBuilder.Append(dog.ReturnName() + " is a " + dog.ReturnSex().ToLower() +", giant sized dog with a medium length coat." + Environment.NewLine);
+                    return descriptionBuilder.ToString();
+                }
+                case "Level3":
+                {
+                    System.Text.StringBuilder descriptionBuilder = new System.Text.StringBuilder();
+                    descriptionBuilder.Append(dog.ReturnName() + " is a " + dog.ReturnSex().ToLower() +", large sized dog with a medium length coat." + Environment.NewLine);
+                    return descriptionBuilder.ToString();
+                }
+                default:
+                {
+                    System.Text.StringBuilder descriptionBuilder = new System.Text.StringBuilder();
+                    descriptionBuilder.Append(dog.ReturnName() + " is a " + dog.ReturnSex().ToLower() + ", " + dog.ReturnSizeDescription().ToLower() + " sized dog with a " +dog.ReturnHairLengthDescription().ToLower() + " length coat." +Environment.NewLine);
+                    return descriptionBuilder.ToString();
+                }
+            }
         }
 
         //Create string with all stats

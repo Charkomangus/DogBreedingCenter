@@ -88,6 +88,7 @@ namespace Assets.Scripts
                     Destroy(_slots[i].Item);
             }
             ClosePuppyManager();
+            GameManager.Instance.BreedingManager.BreedingType = 0;
 
         }
 
@@ -99,6 +100,17 @@ namespace Assets.Scripts
             {
                 if (_slots[i].Item)
                     Destroy(_slots[i].Item);
+            }
+            switch (GameManager.Instance.BreedingManager.BreedingType)
+            {
+                case 1:
+                    GameManager.Instance.GeneticVarience.Value += 15;
+                    GameManager.Instance.BreedingManager.BreedingType = 0;
+                    break;
+                case 2:
+                    GameManager.Instance.GeneticVarience.Value += 5;
+                    GameManager.Instance.BreedingManager.BreedingType = 0;
+                    break;
             }
             ClosePuppyManager();
 
@@ -112,14 +124,16 @@ namespace Assets.Scripts
         {
             System.Text.StringBuilder statsBuilder = new System.Text.StringBuilder();
             statsBuilder.Append(_dog.ReturnName() + " is a " + _dog.ReturnSex().ToLower() + ", " +_dog.ReturnSizeDescription().ToLower() + " sized dog with a " +_dog.ReturnHairLengthDescription().ToLower() + " length " + "coat." +Environment.NewLine + Environment.NewLine);
-            statsBuilder.Append("Intelligence : " + _dog.ReturnIntelligence() / 10 + "/10" + Environment.NewLine);
-            statsBuilder.Append("Endurance: " + _dog.ReturnEndurance() / 10 + "/10" + Environment.NewLine);
-            statsBuilder.Append("Demeanor: "  + _dog.ReturnDemeanor() / 10 + "/10" + Environment.NewLine);
-            statsBuilder.Append("Strength: " + _dog.ReturnStrength() / 10 + "/10" + Environment.NewLine);
-            statsBuilder.Append("Hearing: " + _dog.ReturnHearing() / 10 + "/10" + Environment.NewLine);
-            statsBuilder.Append("Scent: " + _dog.ReturnScent() / 10 + "/10" + Environment.NewLine);
-            statsBuilder.Append("Sight: " + _dog.ReturnSight() / 10 + "/10" + Environment.NewLine);
-            statsBuilder.Append("Bark: " +  _dog.ReturnBark() / 10 + "/10" + Environment.NewLine);
+            statsBuilder.Append("Intelligence : " + Mathf.FloorToInt(_dog.ReturnIntelligence() / 10) + "/10" + Environment.NewLine);
+            statsBuilder.Append("Endurance: " + Mathf.FloorToInt(_dog.ReturnEndurance() / 10) + "/10" + Environment.NewLine);
+            statsBuilder.Append("Demeanor: "  + Mathf.FloorToInt(_dog.ReturnDemeanor() / 10) + "/10" + Environment.NewLine);
+            statsBuilder.Append("Strength: " + Mathf.FloorToInt(_dog.ReturnStrength() / 10) + "/10" + Environment.NewLine);
+            statsBuilder.Append("Hearing: " + Mathf.FloorToInt(_dog.ReturnHearing() / 10) + "/10" + Environment.NewLine);
+            statsBuilder.Append("Scent: " + Mathf.FloorToInt(_dog.ReturnScent() / 10) + "/10" + Environment.NewLine);
+            statsBuilder.Append("Sight: " + Mathf.FloorToInt(_dog.ReturnSight() / 10) + "/10" + Environment.NewLine);
+            statsBuilder.Append("Bark: " + Mathf.FloorToInt(_dog.ReturnBark() / 10) + "/10" + Environment.NewLine);
+
+
             return statsBuilder.ToString();
         }
 

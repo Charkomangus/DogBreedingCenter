@@ -82,14 +82,14 @@ namespace Assets.Scripts
         {
             System.Text.StringBuilder statsNumbersBuilder = new System.Text.StringBuilder();
 
-            if (_dog.ReturnIntelligence() >= 60)statsNumbersBuilder.Append(_dog.ReturnIntelligence() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnEndurance() >= 60)statsNumbersBuilder.Append(_dog.ReturnEndurance() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnDemeanor() >= 60)statsNumbersBuilder.Append(_dog.ReturnDemeanor() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnStrength() >= 60)statsNumbersBuilder.Append(_dog.ReturnStrength() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnHearing() >= 60) statsNumbersBuilder.Append(_dog.ReturnHearing() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnScent() >= 60)statsNumbersBuilder.Append(_dog.ReturnScent() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnSight() >= 60)statsNumbersBuilder.Append(_dog.ReturnSight() / 10 + "/10" + Environment.NewLine);
-            if (_dog.ReturnBark() >= 60)statsNumbersBuilder.Append(_dog.ReturnBark() / 10 + "/10" + Environment.NewLine);
+            if (_dog.ReturnIntelligence() >= 60)statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnIntelligence() / 10) + "/10" + Environment.NewLine);
+            if (_dog.ReturnEndurance() >= 60)statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnEndurance() / 10) + "/10" + Environment.NewLine);
+            if (_dog.ReturnDemeanor() >= 60)statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnDemeanor() / 10) + "/10" + Environment.NewLine);
+            if (_dog.ReturnStrength() >= 60)statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnStrength() / 10) + "/10" + Environment.NewLine);
+            if (_dog.ReturnHearing() >= 60) statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnHearing() / 10) + "/10" + Environment.NewLine);
+            if (_dog.ReturnScent() >= 60)statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnScent() / 10) + "/10" + Environment.NewLine);
+            if (_dog.ReturnSight() >= 60)statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnSight() / 10) + "/10" + Environment.NewLine);
+            if (_dog.ReturnBark() >= 60)statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnBark() / 10) + "/10" + Environment.NewLine);
 
             return statsNumbersBuilder.ToString();
         }
@@ -147,8 +147,7 @@ namespace Assets.Scripts
         //Set this card as the chosen card of the CardReview
         public void OpenCardReview()
         {
-            GameManager.Instance.SoundManager.PlaySoundEffect(Random.Range(0, 2) == 0? "Sound/Bark.mp3": "Sound/doubleBark.mp3");
-
+            GameManager.Instance.SoundManager.PlaySoundEffect(Random.Range(0, 2) == 0? "Sound/Bark.wav": "Sound/doubleBark.wav");
             GameManager.Instance.SideBar.SetBool("Open", false);
             GameManager.Instance.CardReview.GetComponent<Animator>().SetBool("Open", true);
             transform.SetParent(GameManager.Instance.CardReview.ReturnCardSlot().transform);

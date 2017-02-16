@@ -10,7 +10,7 @@ public class SideBar : MonoBehaviour
 
     [SerializeField] private Text[] _allText;
 	// Use this for initialization
-	void Start ()
+	void Start()
 	{
 	    _allText = GetComponentsInChildren<Text>();
 	    for (int i = 0; i < 4; i++)
@@ -29,6 +29,7 @@ public class SideBar : MonoBehaviour
     {
         if (Resources.Load(filepath) != null)
             return Resources.Load(filepath).ToString();
+        Debug.Log(filepath + " is null!");
         return null;
 
     }

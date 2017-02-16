@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LoLSDK;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Assets.Scripts
         [SerializeField]public float AudioVolume = 0.65f;
         [SerializeField]public float MusicVolume = 0.20f;
         [SerializeField]public float FadedMusicVolume = 0.10f;
+        private List<string> music = new List<string>();
         private string _currentMusic;
         //>>>>AUDIO<<<<<
         private void Start()
@@ -20,6 +22,8 @@ namespace Assets.Scripts
         {
             _currentMusic = filePath;
             LOLSDK.Instance.PlaySound(filePath, true, true);
+            if(filePath!=null)
+                music.Add(filePath);
         }
 
         //play a sound once.
@@ -54,6 +58,14 @@ namespace Assets.Scripts
 
         //Control Volume
         public void StopPreviousMusic()
+        {
+            foreach (var track in music)
+            {
+                LOLSDK.Instance.StopSound(track);
+            }
+        }
+
+        public void StopAllPreviousMusic()
         {
             LOLSDK.Instance.StopSound(_currentMusic);
         }

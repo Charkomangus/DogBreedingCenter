@@ -40,7 +40,7 @@ namespace Assets.Scripts
         //>>>TOOLTIPS<<<<<
         
       
-        public void StartDialogueManager()
+        public void Awake()
         {
             _letterPause = 0.04f;
             _dialogue = GetComponentInChildren<Text>();
@@ -82,6 +82,7 @@ namespace Assets.Scripts
         private IEnumerator TypeText()
         {
             bool first = false;
+            if (_message == null) yield break;
             for (int i = 0; i < _message.text.Length; i++)
             {
                 if (first)
@@ -124,7 +125,8 @@ namespace Assets.Scripts
                         _animators[i].SetBool("Open", true);
                 }
                 _message = LoadText(filepath);
-                _dialogue.text = System.String.Empty;
+                _dialogue = GetComponentInChildren<Text>();
+                _dialogue.text = string.Empty;
                 StartCoroutine(TypeText());
                 EventCheck(_message.text[0]);
                 EventCheck(_message.text[1]);
@@ -265,7 +267,7 @@ namespace Assets.Scripts
             {
                 _speedUp = true;
                 _arrow.SetBool("Open", false);
-                _letterPause /= 5;
+                _letterPause /= 8;
             }
 
 

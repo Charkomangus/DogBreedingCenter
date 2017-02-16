@@ -18,7 +18,7 @@ namespace Assets.Scripts
         [SerializeField]private CardSlot _cardSlot;
         private bool _set;
         // Use this for initialization
-        void Start () {
+        void Awake() {
             _cardSlot = GetComponentInChildren<CardSlot>();
         }
 	
@@ -88,14 +88,14 @@ namespace Assets.Scripts
         {
             System.Text.StringBuilder statsNumbersBuilder = new System.Text.StringBuilder();
 
-            statsNumbersBuilder.Append(_dog.ReturnIntelligence() / 10 + "/10 (" + _dog.ReturnIntelligenceDescription() + ")  " + Environment.NewLine);
-            statsNumbersBuilder.Append(_dog.ReturnEndurance() / 10 + "/10 (" + _dog.ReturnEnduranceDescription() + ")  " + Environment.NewLine);
-            statsNumbersBuilder.Append(_dog.ReturnDemeanor() / 10 + "/10 (" + _dog.ReturnDemeanorDescription() + ")  " + Environment.NewLine);
-            statsNumbersBuilder.Append(_dog.ReturnStrength() / 10 + "/10 (" + _dog.ReturnStrengthDescription() + ")  " + Environment.NewLine);
-            statsNumbersBuilder.Append(_dog.ReturnHearing() / 10 + "/10 (" + _dog.ReturnHearingDescription() + ")  " + Environment.NewLine);
-            statsNumbersBuilder.Append(_dog.ReturnScent() / 10 + "/10 (" + _dog.ReturnScentDescription() + ")  " + Environment.NewLine);
-            statsNumbersBuilder.Append(_dog.ReturnSight() / 10 + "/10 (" + _dog.ReturnSightDescription() + ")  " + Environment.NewLine);
-            statsNumbersBuilder.Append(_dog.ReturnBark() / 10 + "/10 (" + _dog.ReturnBarkDescription() + ")  " + Environment.NewLine);
+            statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnIntelligence() / 10) + "/10 (" + _dog.ReturnIntelligenceDescription() + ")  " + Environment.NewLine);
+            statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnEndurance() / 10) + "/10 (" + _dog.ReturnEnduranceDescription() + ")  " + Environment.NewLine);
+            statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnDemeanor() / 10) + "/10 (" + _dog.ReturnDemeanorDescription() + ")  " + Environment.NewLine);
+            statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnStrength() / 10) + "/10 (" + _dog.ReturnStrengthDescription() + ")  " + Environment.NewLine);
+            statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnHearing() / 10) + "/10 (" + _dog.ReturnHearingDescription() + ")  " + Environment.NewLine);
+            statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnScent() / 10) + "/10 (" + _dog.ReturnScentDescription() + ")  " + Environment.NewLine);
+            statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnSight() / 10) + "/10 (" + _dog.ReturnSightDescription() + ")  " + Environment.NewLine);
+            statsNumbersBuilder.Append(Mathf.FloorToInt(_dog.ReturnBark() / 10) + "/10 (" + _dog.ReturnBarkDescription() + ")  " + Environment.NewLine);
             return statsNumbersBuilder.ToString();
         }
 

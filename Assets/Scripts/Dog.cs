@@ -348,11 +348,11 @@ namespace Assets.Scripts
 
         public string ReturnStrengthDescription()
         {
-            if (_Scent <= 30)
+            if (_strength <= 30)
                 return "Weak";
-            if (_Scent <= 60)
+            if (_strength <= 60)
                 return "Average";
-            if (_Scent <= 90)
+            if (_strength <= 90)
                 return "Strong";
             return "Hercules";
         }
@@ -462,9 +462,9 @@ namespace Assets.Scripts
         public string ReturnBarkDescription()
         {
             if (_bark <= 30)
-                return "Low";
+                return "Quiet";
             if(_bark <= 60)
-                return "Infrequently";
+                return "Infrequent";
             if(_bark <= 90)
                 return "Often";
            return "Constantly";

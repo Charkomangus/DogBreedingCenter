@@ -16,7 +16,7 @@ namespace Assets.Scripts
         [SerializeField] private GameObject[] _item;
         [SerializeField] public GameObject WarningPanel, WarningPanel1;
         [SerializeField] private GameObject _cardPrefab;
-        private int BreedingType;
+        public int BreedingType;
         public bool _firstBirthDone, _secondBirthDone;
         private Generation _futureGeneration;
         private PuppyManager _puppyManager;
@@ -43,9 +43,21 @@ namespace Assets.Scripts
             if (_increase == 0)
                 _decrease = 20;
 
-            if (GameManager.Instance.CurrentLevel == "Level1") return;
-            _firstBirthDone = true;
-            _secondBirthDone = GameManager.Instance.CurrentLevel != "Level2";
+            if (GameManager.Instance.CurrentLevel == "Level1")
+            {
+                _firstBirthDone = false;
+                _secondBirthDone = false;
+            }
+            else if(GameManager.Instance.CurrentLevel == "Level0")
+            {
+                _firstBirthDone = true;
+                _secondBirthDone = true;
+            }
+            else
+            {
+                _firstBirthDone = true;
+                _secondBirthDone = false;
+            }
         }
 
         #region IHasChanged implementation
@@ -79,15 +91,19 @@ namespace Assets.Scripts
                     statsBuilder.Append("Bark: " + Environment.NewLine);
 
 
+                    statsNumbersBuilder.Append(Mathf.FloorToInt(_item[i].GetComponent<Dog>().ReturnIntelligence() / 10) + "/10" + Environment.NewLine);
+                    statsNumbersBuilder.Append(Mathf.FloorToInt(_item[i].GetComponent<Dog>().ReturnEndurance() / 10) + "/10" + Environment.NewLine);
+                    statsNumbersBuilder.Append(Mathf.FloorToInt(_item[i].GetComponent<Dog>().ReturnStrength() / 10) + "/10" + Environment.NewLine);
+                    statsNumbersBuilder.Append(Mathf.FloorToInt(_item[i].GetComponent<Dog>().ReturnDemeanor() / 10) + "/10" + Environment.NewLine);
+                    statsNumbersBuilder.Append(Mathf.FloorToInt(_item[i].GetComponent<Dog>().ReturnHearing() / 10) + "/10" + Environment.NewLine);
+                    statsNumbersBuilder.Append(Mathf.FloorToInt(_item[i].GetComponent<Dog>().ReturnScent() / 10) + "/10" + Environment.NewLine);
+                    statsNumbersBuilder.Append(Mathf.FloorToInt(_item[i].GetComponent<Dog>().ReturnSight() / 10) + "/10" + Environment.NewLine);
+                    statsNumbersBuilder.Append(Mathf.FloorToInt(_item[i].GetComponent<Dog>().ReturnBark() / 10) + "/10" + Environment.NewLine);
 
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnIntelligence()/10 + "/10" +Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnEndurance()/10 + "/10" +Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnStrength() / 10 + "/10" +Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnDemeanor()/10 + "/10" +Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnHearing()/10 + "/10" +Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnScent()/10 + "/10" +Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnSight()/10 + "/10" +Environment.NewLine);
-                    statsNumbersBuilder.Append(_item[i].GetComponent<Dog>().ReturnBark()/10 + "/10" +Environment.NewLine);
+
+
+                    
+                
 
 
 
@@ -269,12 +285,13 @@ namespace Assets.Scripts
             switch (BreedingType)
             {
                 case 1:
-                    GameManager.Instance.GeneticVarience.value -= 15;
+                    GameManager.Instance.GeneticVarience.Value -= 15;
                     break;
                 case 2:
-                    GameManager.Instance.GeneticVarience.value -= 5;
+                    GameManager.Instance.GeneticVarience.Value -= 5;
                     break;
             }
+           
             ExitBreedingMenu();
             GameManager.Instance.SideBar.SetBool("Open", false);
         }

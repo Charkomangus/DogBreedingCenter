@@ -62,7 +62,7 @@ namespace Assets.Scripts
         #region IPointerDownHandler implementation
         public void OnPointerDown(PointerEventData eventData)
         {
-            bool which;
+
             if (GetComponentInParent<CardSlot>() == null)
             {
                 if (GetComponentInParent<QuizCardSlot>().Disabled) return;
