@@ -24,6 +24,8 @@ public class FinalDog : MonoBehaviour
     void Start ()
 	{
 	    _slot = GetComponentInChildren<CardSlot>();
+        _slot.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        _slot.GetComponent<CanvasGroup>().interactable = false;
         _finished = false;
         _animator = GetComponent<Animator>();
 

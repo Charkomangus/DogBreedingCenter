@@ -13,6 +13,7 @@ namespace Assets.Scripts
         [SerializeField]
         private Text[] _texts;
         [SerializeField]private CardSlot[] _slots;
+        private CanvasGroup[] _slotCanvasGroups;
         private Animator _animator;
         public GameObject Holder;
         private Generation _futureGeneration;
@@ -27,6 +28,13 @@ namespace Assets.Scripts
             _texts = GetComponentInChildren<TextHolder>().ReturnText();
           
             _slots = GetComponentsInChildren<CardSlot>();
+            _slotCanvasGroups = new CanvasGroup[_slots.Length];
+            for (int i = 0; i < _slots.Length; i++)
+            {
+                _slotCanvasGroups[i] = _slots[i].GetComponent<CanvasGroup>();
+                _slotCanvasGroups[i].interactable = false;
+                _slotCanvasGroups[i].blocksRaycasts = false;
+            }
             _areYouSure = GameObject.FindGameObjectWithTag("AreYouSure").GetComponent<Animator>();
         }
 
@@ -36,6 +44,8 @@ namespace Assets.Scripts
             _texts = GetComponentInChildren<TextHolder>().ReturnText();
             for (int i = 0; i < puppies.Length; i++)
             {
+                _slotCanvasGroups[i].blocksRaycasts = true;
+                _slotCanvasGroups[i].interactable = true;
                 puppies[i].transform.SetParent(_slots[i].transform);
                 puppies[i].transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                 _texts[i].text = SetStatText(_slots[i].Item.GetComponent<Dog>());
@@ -55,6 +65,8 @@ namespace Assets.Scripts
         {
             for (int i = 0; i < _slots.Length; i++)
             {
+                _slotCanvasGroups[i].blocksRaycasts = false;
+                _slotCanvasGroups[i].interactable = false;
                 _slots[i].transform.SetParent(GameObject.FindGameObjectWithTag("puppyGeneration").transform);
                 _texts[i].transform.SetParent(GetComponentInChildren<TextHolder>().transform);
             }

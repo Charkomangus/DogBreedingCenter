@@ -22,6 +22,7 @@ namespace Assets.Scripts
         private Button[] _allButtonsinScene;
         //>>>BUTTONS<<<
 
+
         //>>>>MANAGERS<<<<
         private static GameManager _instance;
         //Static instance of GameManager which allows it to be accessed by any other script.
@@ -121,9 +122,7 @@ namespace Assets.Scripts
             {
                 case LoLSDK.GameState.Paused:
                     {
-
                         Time.timeScale = 0;
-
                     }
                     break;
 
@@ -391,7 +390,7 @@ namespace Assets.Scripts
         //Checks the current generations genetic variety
         public void GeneticVarienceWarnings()
         {
-            if (GeneticVarience == null || Victory) return;
+            if (GeneticVarience == null || Victory || DialogueManager.IsOpen()) return;
 
 
             if (GeneticVarience.Value <= 10 && !_failed)

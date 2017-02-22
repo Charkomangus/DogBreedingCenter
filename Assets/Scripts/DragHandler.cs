@@ -108,7 +108,7 @@ namespace Assets.Scripts
             Vector3 currentPos = Camera.main.ScreenToWorldPoint(currentScreenPoint);
 
             if(currentPos != transform.position)
-                transform.position = Vector3.Lerp(transform.position, currentPos, Time.deltaTime * 20); // use a float between 0 and 1 for lerp factor
+                transform.position = Vector3.Lerp(transform.position, currentPos, Time.deltaTime * 60); // use a float between 0 and 1 for lerp factor
           
         }
 
@@ -148,9 +148,9 @@ namespace Assets.Scripts
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (transform.parent.tag == "cardHolder")
-                if(_card!=null)
-                _card.ReturnToParent();
+            if(_card != null)
+                if (transform.parent != _card.ReturnParent() && transform.parent.tag != "cardReviewSlot")
+                    _card.ReturnToParent();
             endTime = Time.time;
             holdTime = endTime - startTime;
             if (holdTime > MaxTime && ItemBeingDragged == null)

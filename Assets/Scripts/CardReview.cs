@@ -6,7 +6,7 @@ using LoLSDK;
 
 namespace Assets.Scripts
 {
-    public class CardReview : MonoBehaviour, IPointerUpHandler
+    public class CardReview : MonoBehaviour
     {
         [SerializeField]private Text _stats;
         [SerializeField]private Text _statsNumber;
@@ -28,6 +28,7 @@ namespace Assets.Scripts
             if (!_slot.Item) return;
             if(!_set)
                 SetDog();
+
         }
 
 
@@ -113,13 +114,6 @@ namespace Assets.Scripts
                 GameManager.Instance.SideBar.SetBool("Open", true);
         }
 
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            if (transform.childCount <= 0) return;
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).GetComponent<Card>().ReturnToParent();
-            }
-        }
+      
     }
 }
