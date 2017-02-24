@@ -172,11 +172,11 @@ namespace Assets.Scripts
                 case "Menu":
                     //SOUND
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).mp3");
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).mp3");
                     SoundManager.PlayBackgroundMusic("Music/menuAmbient.mp3");
                     break;
 
@@ -190,8 +190,8 @@ namespace Assets.Scripts
                         DialogueManager.OpenDialogue("Introduction/Introduction");
                     //SOUND
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
-                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).mp3");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).mp3");
                     break;
 
                 case "Level0":
@@ -205,10 +205,10 @@ namespace Assets.Scripts
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
                     ChosenCardPrefab = _pointerCard;
                     LoadGameManagers();
-                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).mp3");
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
-                    SoundManager.PlayBackgroundMusic("Music/Thinking Music.ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.mp3");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music.mp3");
 
                     break;
                 case "Level1":
@@ -222,8 +222,8 @@ namespace Assets.Scripts
                     ChosenCardPrefab = _pointerCard;
                     LoadGameManagers();
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
-                    SoundManager.PlayBackgroundMusic("Music/Thinking Music.ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.mp3");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music.mp3");
                     break;
                 case "Level2":
 
@@ -235,8 +235,8 @@ namespace Assets.Scripts
                         DialogueManager.OpenDialogue(CurrentLevel + "/Introduction");
                     ChosenCardPrefab = _mastiffCard;
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
-                    SoundManager.PlayBackgroundMusic("Music/Thinking Music.ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.mp3");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music.mp3");
                     LoadGameManagers();
                     break;
                 case "Level3":
@@ -250,8 +250,8 @@ namespace Assets.Scripts
                     LoadGameManagers();
                     Quiz = GameObject.FindGameObjectWithTag("Quiz").GetComponent<Quiz>();
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
-                    SoundManager.PlayBackgroundMusic("Music/Thinking Music.ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.mp3");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music.mp3");
                     break;
                 case "Quiz1":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
@@ -264,9 +264,9 @@ namespace Assets.Scripts
 
                     QuizManager = GameObject.FindGameObjectWithTag("QuizManager").GetComponent<QuizManager>();
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
-                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).mp3");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).mp3");
                     break;
                 case "Quiz2":
                     //>>>>>>SDK UPDATE<<<<<<<<<<<<
@@ -279,9 +279,9 @@ namespace Assets.Scripts
                     QuizManager = GameObject.FindGameObjectWithTag("QuizManager").GetComponent<QuizManager>();
                  
                     SoundManager.StopPreviousMusic("Music/menuAmbient.mp3");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).ogg");
-                    SoundManager.StopPreviousMusic("Music/Thinking Music.ogg");
-                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).ogg");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music(short).mp3");
+                    SoundManager.StopPreviousMusic("Music/Thinking Music.mp3");
+                    SoundManager.PlayBackgroundMusic("Music/Thinking Music(short).mp3");
 
                     break;
 
@@ -556,7 +556,7 @@ namespace Assets.Scripts
         {
             yield return new WaitForSeconds(3);
             LOLSDK.Instance.CompleteGame();
-            LOLSDK.Instance.StopSound("Music/Thinking Music(short).ogg");
+            LOLSDK.Instance.StopSound("Music/Thinking Music(short).mp3");
             yield return new WaitForSeconds(3);
             SceneManager.LoadScene("Menu");
             StopAllCoroutines();

@@ -12,7 +12,7 @@ namespace Assets.Scripts
     public class DialogueManager : MonoBehaviour, IPointerDownHandler
     {
 
-        private float _letterPause;
+        private float _letterPause = 100000000;
         [SerializeField]private Animator[] _animators;
         [SerializeField]
         private Animator _proffessorAnimator, _catBarAnimator,_arrow,_cat, _proffessorCrash, _fade;
@@ -88,7 +88,7 @@ namespace Assets.Scripts
                 if (first)
                 {
                     _dialogue.text += _message.text[i];
-                    yield return new WaitForSeconds(_letterPause);
+                    yield return new WaitForSeconds(_letterPause * Time.fixedDeltaTime);
                 }
                 else
                     first = true;
@@ -267,7 +267,7 @@ namespace Assets.Scripts
             {
                 _speedUp = true;
                 _arrow.SetBool("Open", false);
-                _letterPause /= 8;
+                _letterPause /= 1000;
             }
 
 
