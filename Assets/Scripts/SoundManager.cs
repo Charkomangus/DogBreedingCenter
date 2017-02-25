@@ -9,7 +9,7 @@ namespace Assets.Scripts
         //>>>>AUDIO<<<<<
         [SerializeField]public float AudioVolume = 0.65f;
         [SerializeField]public float MusicVolume = 0.20f;
-        [SerializeField]public float FadedMusicVolume = 0.10f;
+        [SerializeField]public float FadedMusicVolume = 0.01f;
         private List<string> music = new List<string>();
         private string _currentMusic;
         //>>>>AUDIO<<<<<

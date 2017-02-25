@@ -42,7 +42,7 @@ namespace Assets.Scripts
       
         public void Awake()
         {
-            _letterPause = 0.04f;
+            _letterPause = 0.03f;
             _dialogue = GetComponentInChildren<Text>();
             _animators = GetComponentsInChildren<Animator>();
             for (int i = 0; i < _animators.Length; i++)
@@ -81,17 +81,11 @@ namespace Assets.Scripts
         //Type text letter by letter
         private IEnumerator TypeText()
         {
-            bool first = false;
             if (_message == null) yield break;
-            for (int i = 0; i < _message.text.Length; i++)
+            for (int i = 1; i < _message.text.Length; i++)
             {
-                if (first)
-                {
                     _dialogue.text += _message.text[i];
-                    yield return new WaitForSeconds(_letterPause * Time.fixedDeltaTime);
-                }
-                else
-                    first = true;
+                    yield return new WaitForSeconds(_letterPause * Time.deltaTime);
             }
             _finished = true;
         }
@@ -267,7 +261,7 @@ namespace Assets.Scripts
             {
                 _speedUp = true;
                 _arrow.SetBool("Open", false);
-                _letterPause = 0.005f;
+                _letterPause /= 10f;
             }
 
 
