@@ -21,6 +21,7 @@ namespace Assets.Scripts
         [SerializeField]private Sprite[] _smallDogs;
         [SerializeField]private Sprite _finalDog;
         [SerializeField]private Image _dogImage;
+        private string _parentTag;
         private Sprite[] _currentSize;
         private Dog _dog;
         [SerializeField]
@@ -33,7 +34,7 @@ namespace Assets.Scripts
             _reviewButton = GetComponentInChildren<Button>().GetComponent<CanvasGroup>();
             _dog = GetComponent<Dog>();
             _parent = transform.parent;
-         
+            _parentTag = _parent.tag;
             _name.text = GetComponent<Dog>().ReturnName();
             _stats.text = SetStats();
             _numbers.text = SetStatNumberText();
@@ -45,8 +46,8 @@ namespace Assets.Scripts
         // Update is called once per frame
         private void Update()
         {
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
-            if (transform.parent.tag == "breedingSlotHolder" || transform.parent.tag == "Holder" ||transform.parent.tag == "cardHolder" || transform.parent.tag == "cardReviewSlot" ||transform.parent.tag == "FinalDogSlot" ||transform.parent.tag == "PuppySlots" )
+          
+            if (_parentTag == "breedingSlotHolder" || _parentTag == "Holder" || _parentTag == "cardHolder" || _parentTag == "cardReviewSlot" || _parentTag == "FinalDogSlot" || _parentTag == "PuppySlots" )
             {
                 _reviewButton.interactable = false;
                 _reviewButton.blocksRaycasts = false;
@@ -60,6 +61,7 @@ namespace Assets.Scripts
                 _reviewButton.blocksRaycasts = true;
                 _reviewButton.alpha = 1;
                 _parent = transform.parent;
+                _parentTag = _parent.tag;
             }
             else
             {
@@ -68,10 +70,8 @@ namespace Assets.Scripts
                 _reviewButton.blocksRaycasts = true;
                 _reviewButton.alpha = 1;
                 _parent = transform.parent;
-            }
-        
-
-
+                _parentTag = _parent.tag;
+            }  
         }
 
         //Create string with all stats
@@ -121,7 +121,7 @@ namespace Assets.Scripts
         //Return this card to its original parent. If the original parent is occupied set the first unnocupied one as it's new parent
         public void ReturnToParent()
         {
-            if (_parent == null)
+            if (_parent == null || _parent.GetComponent<CardSlot>().Item != null)
             {
                 CardSlot[] cardSlots = GameManager.Instance.GenerationManager.ReturnCurrentGeneration().ReturnCardSlots();
                 for (int i = 0; i < cardSlots.Length; i++)

@@ -1,0 +1,87 @@
+<linker>
+<assembly fullname="Assembly-CSharp">
+<type fullname="Assets.Scripts.BackgroundManager" preserve="all"/>
+<type fullname="Assets.Scripts.BreedButton" preserve="all"/>
+<type fullname="Assets.Scripts.BreedingManager" preserve="all"/>
+<type fullname="Assets.Scripts.Card" preserve="all"/>
+<type fullname="Assets.Scripts.CardManager" preserve="all"/>
+<type fullname="Assets.Scripts.CardReview" preserve="all"/>
+<type fullname="Assets.Scripts.CardSlot" preserve="all"/>
+<type fullname="Assets.Scripts.CardWarning" preserve="all"/>
+<type fullname="Assets.Scripts.DialogueManager" preserve="all"/>
+<type fullname="Assets.Scripts.Dog" preserve="all"/>
+<type fullname="Assets.Scripts.DragHandler" preserve="all"/>
+<type fullname="Assets.Scripts.FPScounter" preserve="all"/>
+<type fullname="FinalDog" preserve="all"/>
+<type fullname="Assets.Scripts.GameManager" preserve="all"/>
+<type fullname="Assets.Scripts.Gender" preserve="all"/>
+<type fullname="Assets.Scripts.Generation" preserve="all"/>
+<type fullname="Assets.Scripts.GenerationManager" preserve="all"/>
+<type fullname="Assets.Scripts.Handle" preserve="all"/>
+<type fullname="Assets.Scripts.LoadLevel" preserve="all"/>
+<type fullname="Assets.Scripts.MainMenuManager" preserve="all"/>
+<type fullname="Assets.Scripts.MenuCamera" preserve="all"/>
+<type fullname="Assets.Scripts.Parallax" preserve="all"/>
+<type fullname="Assets.Scripts.Percentage" preserve="all"/>
+<type fullname="Polaroid" preserve="all"/>
+<type fullname="Assets.Scripts.PuppyManager" preserve="all"/>
+<type fullname="Quiz" preserve="all"/>
+<type fullname="Assets.Scripts.QuizCardSlot" preserve="all"/>
+<type fullname="Assets.Scripts.QuizManager" preserve="all"/>
+<type fullname="SideBar" preserve="all"/>
+<type fullname="Assets.Scripts.SliderManager" preserve="all"/>
+<type fullname="Assets.Scripts.SoundManager" preserve="all"/>
+<type fullname="Assets.Scripts.TextHolder" preserve="all"/>
+<type fullname="Assets.Scripts.Tooltip" preserve="all"/>
+</assembly>
+<assembly fullname="UnityEngine.UI">
+<type fullname="UnityEngine.EventSystems.EventSystem" preserve="all"/>
+<type fullname="UnityEngine.EventSystems.EventTrigger" preserve="all"/>
+<type fullname="UnityEngine.EventSystems.UIBehaviour" preserve="all"/>
+<type fullname="UnityEngine.EventSystems.BaseInput" preserve="all"/>
+<type fullname="UnityEngine.EventSystems.BaseInputModule" preserve="all"/>
+<type fullname="UnityEngine.EventSystems.PointerInputModule" preserve="all"/>
+<type fullname="UnityEngine.EventSystems.StandaloneInputModule" preserve="all"/>
+<type fullname="UnityEngine.EventSystems.TouchInputModule" preserve="all"/>
+<type fullname="UnityEngine.EventSystems.BaseRaycaster" preserve="all"/>
+<type fullname="UnityEngine.EventSystems.Physics2DRaycaster" preserve="all"/>
+<type fullname="UnityEngine.EventSystems.PhysicsRaycaster" preserve="all"/>
+<type fullname="UnityEngine.UI.Button" preserve="all"/>
+<type fullname="UnityEngine.UI.Dropdown" preserve="all"/>
+<type fullname="UnityEngine.UI.Dropdown/DropdownItem" preserve="all"/>
+<type fullname="UnityEngine.UI.Graphic" preserve="all"/>
+<type fullname="UnityEngine.UI.GraphicRaycaster" preserve="all"/>
+<type fullname="UnityEngine.UI.Image" preserve="all"/>
+<type fullname="UnityEngine.UI.InputField" preserve="all"/>
+<type fullname="UnityEngine.UI.Mask" preserve="all"/>
+<type fullname="UnityEngine.UI.MaskableGraphic" preserve="all"/>
+<type fullname="UnityEngine.UI.RawImage" preserve="all"/>
+<type fullname="UnityEngine.UI.RectMask2D" preserve="all"/>
+<type fullname="UnityEngine.UI.Scrollbar" preserve="all"/>
+<type fullname="UnityEngine.UI.ScrollRect" preserve="all"/>
+<type fullname="UnityEngine.UI.Selectable" preserve="all"/>
+<type fullname="UnityEngine.UI.Slider" preserve="all"/>
+<type fullname="UnityEngine.UI.Text" preserve="all"/>
+<type fullname="UnityEngine.UI.Toggle" preserve="all"/>
+<type fullname="UnityEngine.UI.ToggleGroup" preserve="all"/>
+<type fullname="UnityEngine.UI.AspectRatioFitter" preserve="all"/>
+<type fullname="UnityEngine.UI.CanvasScaler" preserve="all"/>
+<type fullname="UnityEngine.UI.ContentSizeFitter" preserve="all"/>
+<type fullname="UnityEngine.UI.GridLayoutGroup" preserve="all"/>
+<type fullname="UnityEngine.UI.HorizontalLayoutGroup" preserve="all"/>
+<type fullname="UnityEngine.UI.HorizontalOrVerticalLayoutGroup" preserve="all"/>
+<type fullname="UnityEngine.UI.LayoutElement" preserve="all"/>
+<type fullname="UnityEngine.UI.LayoutGroup" preserve="all"/>
+<type fullname="UnityEngine.UI.VerticalLayoutGroup" preserve="all"/>
+<type fullname="UnityEngine.UI.BaseMeshEffect" preserve="all"/>
+<type fullname="UnityEngine.UI.Outline" preserve="all"/>
+<type fullname="UnityEngine.UI.PositionAsUV1" preserve="all"/>
+<type fullname="UnityEngine.UI.Shadow" preserve="all"/>
+</assembly>
+<assembly fullname="LoLSDK">
+<type fullname="LoLSDK.LOLSDK" preserve="all"/>
+<type fullname="LoLSDK.LOLSDKInit" preserve="all"/>
+<type fullname="Singleton`1" preserve="all"/>
+<type fullname="LoLSDK.CPUMemTest" preserve="all"/>
+</assembly>
+</linker>

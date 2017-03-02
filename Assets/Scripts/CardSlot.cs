@@ -11,8 +11,10 @@ namespace Assets.Scripts
     {
         [SerializeField]public float Scale;
         [SerializeField]public bool Disabled;
-        private Image image;
+        private bool _oldDisabled;
+        private Image _image;
         private Transform _transform;
+        private string _tag;
         public GameObject Item
         {
             get { return transform.childCount > 0 ? transform.GetChild(0).gameObject : null; }
@@ -20,7 +22,9 @@ namespace Assets.Scripts
 
         void Start()
         {
-            image = GetComponent<Image>();
+            _oldDisabled = Disabled;
+            _tag = tag;
+            _image = GetComponent<Image>();
         }
 
         #region IDropHandler implementation
@@ -43,15 +47,24 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            if (tag == "cardReviewSlot" || tag == "cardHolder") return;
+            if (_oldDisabled == Disabled) return;
+            if (_tag == "cardReviewSlot" || _tag == "cardHolder") return;
+
+         
+            _oldDisabled = Disabled;
+            SetStatus();
+        }
+
+        private void SetStatus()
+        {
             if (Disabled)
             {
-                image.color = new Color(0,0,0,0.2f);
+                _image.color = new Color(0.7f, 0.7f, 0.7f, 1);
                 transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
             }
             else
             {
-                image.color = new Color(1, 1, 1, 1);
+                _image.color = new Color(1, 1, 1, 1);
                 transform.localScale = new Vector3(1, 1, 1);
             }
         }

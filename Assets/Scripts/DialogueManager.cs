@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -23,8 +21,7 @@ namespace Assets.Scripts
         private bool _finished;
         
         private int _index;
-        private bool _open;
-        private bool _catOpen;
+        private bool _open;      
         private Text _dialogue;
         private TextAsset _message;
         private Polaroid _polaroid;
