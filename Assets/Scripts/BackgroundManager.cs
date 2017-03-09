@@ -6,7 +6,7 @@ namespace Assets.Scripts
     public class BackgroundManager : MonoBehaviour, IPointerDownHandler, IPointerExitHandler,IPointerUpHandler
     {
 
-        private bool pressed;
+        private bool _pressed;
         [SerializeField] private float x, y;
         private Transform _mainMovable;
         
@@ -19,23 +19,23 @@ namespace Assets.Scripts
         //  is called once per frame
         void Update()
         {
-            if (pressed)
+            if (_pressed)
                 _mainMovable.localPosition += new Vector3(x*250, y* 250, 0)*Time.deltaTime;
             OutOfBounds();
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            pressed = true;
+            _pressed = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            pressed = false;
+            _pressed = false;
         }
         public void OnPointerUp(PointerEventData eventData)
         {
-            pressed = false;
+            _pressed = false;
         }
 
 

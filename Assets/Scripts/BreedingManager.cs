@@ -145,8 +145,8 @@ namespace Assets.Scripts
                 _item[i] = _cardSlots.GetComponentsInChildren<CardSlot>()[i].Item;
                 _item[i].GetComponent<Card>().ReturnToParent();
 
-                _cardStatsText[i].text = System.String.Empty;
-                _cardStatsNumberText[i].text = System.String.Empty;
+                _cardStatsText[i].text = string.Empty;
+                _cardStatsNumberText[i].text = string.Empty;
                 _item[i] = null;
             }
             GetComponent<Animator>().SetBool("Open", false);
@@ -277,21 +277,22 @@ namespace Assets.Scripts
                 if (!_secondBirthDone)
                 {
                     _secondBirthDone = true;
-                    GameManager.Instance.DialogueManager.OpenDialogue(GameManager.Instance.CurrentLevel +"/secondBirth");
+                    GameManager.Instance.DialogueManager.OpenDialogue(GameManager.Instance.CurrentLevel + "/secondBirth");
                 }
                 _puppyManager.OpenPuppyManager(puppies);
                 GameManager.Instance.SoundManager.PlaySoundEffect("Sound/puppy.wav");
+
+                switch (BreedingType)
+                {
+                    case 1:
+                        GameManager.Instance.GeneticVarience.Value -= 15;
+                        break;
+                    case 2:
+                        GameManager.Instance.GeneticVarience.Value -= 5;
+                        break;
+                }
             }
-            switch (BreedingType)
-            {
-                case 1:
-                    GameManager.Instance.GeneticVarience.Value -= 15;
-                    break;
-                case 2:
-                    GameManager.Instance.GeneticVarience.Value -= 5;
-                    break;
-            }
-           
+
             ExitBreedingMenu();
             GameManager.Instance.SideBar.SetBool("Open", false);
         }

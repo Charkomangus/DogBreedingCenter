@@ -61,9 +61,10 @@ namespace Assets.Scripts
                 _reviewButton.alpha = 1;
                 _parent = transform.parent;
                 parentTag = _parent.tag;
-               
+                _canvasGroup.alpha = _parent.GetComponent<CardSlot>().Disabled ? 0.75f : 1;
+
             }
-            _canvasGroup.alpha = _parent.GetComponent<CardSlot>().Disabled ? 0.75f : 1;
+          
         }
 
 
