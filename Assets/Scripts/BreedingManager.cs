@@ -118,7 +118,7 @@ namespace Assets.Scripts
 
         #endregion
 
-        //Clears Text if no dogs are present
+        // Clears Text if no dogs are present
         private void Update()
         {
             for (int i = 0; i < _cardSlots.childCount; i++)
@@ -135,7 +135,7 @@ namespace Assets.Scripts
         }
 
 
-        //Exits menu -> Any cards left in the menu are returned to their original parent, resets text
+        // Exits menu -> Any cards left in the menu are returned to their original parent, resets text
         private void ExitBreedingMenu()
         {
             if (WarningPanel.activeSelf) return;
@@ -152,7 +152,7 @@ namespace Assets.Scripts
             GetComponent<Animator>().SetBool("Open", false);
         }
 
-        //Breeds the two Dogs
+        // Breeds the two Dogs
         public void Breed()
         {
             int numberOfDogs = 0;
@@ -253,7 +253,7 @@ namespace Assets.Scripts
             }
         }
 
-        //Breed with no pesky warnings
+        // Breed with no pesky warnings
         public void BreedWithNoWarnings()
         {
             WarningPanel1.SetActive(false);
@@ -296,7 +296,7 @@ namespace Assets.Scripts
             GameManager.Instance.SideBar.SetBool("Open", false);
         }
 
-        //Open the menu
+        // Open the menu
         public void OpenBreedingMenu(bool status)
         {
             GetComponent<Animator>().SetBool("Open", status);
@@ -320,7 +320,7 @@ namespace Assets.Scripts
             GameObject dog = Instantiate(_cardPrefab);
             Dog newDog = dog.GetComponent<Dog>();
             
-            //Make sure to balance genders
+            // Make sure to balance genders
             if (_futureGeneration.GetComponent<Generation>().ReturnMales() >_futureGeneration.GetComponent<Generation>().ReturnFemales())
             {
                 newDog.SetSex("Female");
@@ -333,34 +333,34 @@ namespace Assets.Scripts
             {
                 newDog.SetSex();
             }
-            //Set Name & Sex
+            // Set Name & Sex
             newDog.SetName();
 
-            //Set parents
+            // Set parents
             Dog parent0 = _cardSlots.GetComponentsInChildren<CardSlot>()[0].Item.GetComponent<Dog>();
             Dog parent1 = _cardSlots.GetComponentsInChildren<CardSlot>()[1].Item.GetComponent<Dog>();
 
 
             newDog.SetParents(parent0.gameObject, parent1.gameObject);
-            //Set Size
+            // Set Size
             newDog.SetSize(Constrain((parent0.ReturnSize() + parent1.ReturnSize())/2 + Random.Range(_decrease, _increase)));
-            //Set Bark
+            // Set Bark
             newDog.SetBark(Constrain((parent0.ReturnBark() + parent1.ReturnBark())/2 + Random.Range(min, max)));
-            //Set Endurance
+            // Set Endurance
             newDog.SetEndurance(Constrain((parent0.ReturnEndurance() + parent1.ReturnEndurance())/2 + Random.Range(min, max)));
-            //Set Scent
+            // Set Scent
             newDog.SetScent(Constrain((parent0.ReturnScent() + parent1.ReturnScent())/2 + Random.Range(min, max)));
-            //Set Hearing
+            // Set Hearing
             newDog.SetHearing(Constrain((parent0.ReturnHearing() + parent1.ReturnHearing())/2 + Random.Range(min, max)));
-            //Set Demeanor
+            // Set Demeanor
             newDog.SetDemeanor(Constrain((parent0.ReturnDemeanor() + parent1.ReturnDemeanor())/2 + Random.Range(min, max)));
-            //Set Sight
+            // Set Sight
             newDog.SetSight(Constrain((parent0.ReturnSight() + parent1.ReturnSight())/2 + Random.Range(min, max)));
-            //Set Intelligence 
+            // Set Intelligence 
             newDog.SetIntelligence (Constrain((parent0.ReturnIntelligence () + parent1.ReturnIntelligence ())/2 +Random.Range(min, max)));
-            //Set Hair
+            // Set Hair
             newDog.SetHairLength(Constrain((parent0.ReturnHair() + parent1.ReturnHair())/2 + Random.Range(_decrease, _increase)));
-            //Set Strenth
+            // Set Strenth
             newDog.SetStrength(Constrain((parent0.ReturnStrength() + parent1.ReturnStrength())/2 + Random.Range(min, max)));
 
 

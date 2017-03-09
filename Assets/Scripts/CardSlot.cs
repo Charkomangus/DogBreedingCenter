@@ -59,7 +59,7 @@ namespace Assets.Scripts
         {
             if (Disabled)
             {
-                _image.color = new Color(0.7f, 0.7f, 0.7f, 1);
+                _image.color = new Color(0.7f, 0.7f, 0.7f, 0.5f);
                 transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
             }
             else

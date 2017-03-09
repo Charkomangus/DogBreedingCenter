@@ -9,72 +9,65 @@ namespace Assets.Scripts
 {
     public class Card : MonoBehaviour
     {
-       
-        [SerializeField]private Transform _parent;
-        [SerializeField]private CanvasGroup _canvasGroup;
-        [SerializeField]private Text _name;
-        [SerializeField]private Text _stats;
-        [SerializeField]private Text _numbers;
-        [SerializeField]private Sprite[] _giantDogs;
-        [SerializeField]private Sprite[] _largeDogs;
-        [SerializeField]private Sprite[] _mediumDogs;
-        [SerializeField]private Sprite[] _smallDogs;
-        [SerializeField]private Sprite _finalDog;
-        [SerializeField]private Image _dogImage;
-        private string _parentTag;
+
+        [SerializeField] private Transform _parent;
+        [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private Text _name;
+        [SerializeField] private Text _stats;
+        [SerializeField] private Text _numbers;
+        [SerializeField] private Sprite[] _giantDogs;
+        [SerializeField] private Sprite[] _largeDogs;
+        [SerializeField] private Sprite[] _mediumDogs;
+        [SerializeField] private Sprite[] _smallDogs;
+        [SerializeField] private Sprite _finalDog;
+        [SerializeField] private Image _dogImage;
         private Sprite[] _currentSize;
         private Dog _dog;
-        [SerializeField]
-        private CanvasGroup _reviewButton;
+        [SerializeField] private CanvasGroup _reviewButton;
 
 
         // Use this for initialization
-        private void Start ()
+        private void Start()
         {
             _reviewButton = GetComponentInChildren<Button>().GetComponent<CanvasGroup>();
             _dog = GetComponent<Dog>();
             _parent = transform.parent;
-            _parentTag = _parent.tag;
+        
             _name.text = GetComponent<Dog>().ReturnName();
             _stats.text = SetStats();
             _numbers.text = SetStatNumberText();
             _canvasGroup = GetComponent<CanvasGroup>();
             SetImage();
-           
+
         }
-	
+
         // Update is called once per frame
         private void Update()
         {
-          
-            if (_parentTag == "breedingSlotHolder" || _parentTag == "Holder" || _parentTag == "cardHolder" || _parentTag == "cardReviewSlot" || _parentTag == "FinalDogSlot" || _parentTag == "PuppySlots" )
+            string parentTag = transform.parent.tag;
+            if (parentTag == "breedingSlotHolder" || parentTag == "Holder" || parentTag == "cardHolder" ||
+                parentTag == "cardReviewSlot" || parentTag == "FinalDogSlot" || parentTag == "PuppySlots")
             {
                 _reviewButton.interactable = false;
                 _reviewButton.blocksRaycasts = false;
                 _reviewButton.alpha = 0;
                 _canvasGroup.alpha = 1;
-            }
-            else if (_parent.GetComponent<CardSlot>().Disabled)
-            {
-                _canvasGroup.alpha = 0.75f;
-                _reviewButton.interactable = true;
-                _reviewButton.blocksRaycasts = true;
-                _reviewButton.alpha = 1;
-                _parent = transform.parent;
-                _parentTag = _parent.tag;
+
             }
             else
             {
-                _canvasGroup.alpha = 1;
                 _reviewButton.interactable = true;
                 _reviewButton.blocksRaycasts = true;
                 _reviewButton.alpha = 1;
                 _parent = transform.parent;
-                _parentTag = _parent.tag;
-            }  
+                parentTag = _parent.tag;
+               
+            }
+            _canvasGroup.alpha = _parent.GetComponent<CardSlot>().Disabled ? 0.75f : 1;
         }
 
-        //Create string with all stats
+
+//Create string with all stats
         private string SetStatNumberText()
         {
             System.Text.StringBuilder statsNumbersBuilder = new System.Text.StringBuilder();
@@ -90,9 +83,9 @@ namespace Assets.Scripts
 
             return statsNumbersBuilder.ToString();
         }
-     
-     
-        //Use dog componment to populate the text describing the card
+
+
+        //Use dog component to populate the text describing the card
         public string SetStats()
         {
             System.Text.StringBuilder statsBuilder = new System.Text.StringBuilder();
@@ -118,7 +111,7 @@ namespace Assets.Scripts
             return statsBuilder.ToString();
         }
 
-        //Return this card to its original parent. If the original parent is occupied set the first unnocupied one as it's new parent
+        //Return this card to its original parent. If the original parent is occupied set the first unoccupied one as it's new parent
         public void ReturnToParent()
         {
             if (_parent == null || _parent.GetComponent<CardSlot>().Item != null)
@@ -130,6 +123,7 @@ namespace Assets.Scripts
                         _parent = cardSlots[i].transform;
                 }
             }
+
             transform.SetParent(_parent);
             transform.localScale = new Vector3(_parent.GetComponent<CardSlot>().Scale, _parent.GetComponent<CardSlot>().Scale, 1);
         }
@@ -161,13 +155,13 @@ namespace Assets.Scripts
         }
 
 
-        //Choose apropriate image to show dog
+        //Choose appropriate image to show dog
         public void SetImage(Sprite image)
         {
             _dogImage.sprite = image;
         }
 
-        //Choose apropriate image to show dog
+        //Choose appropriate image to show dog
         private void SetImage()
         {
             if (GameManager.Instance.FinalDogManager != null)
