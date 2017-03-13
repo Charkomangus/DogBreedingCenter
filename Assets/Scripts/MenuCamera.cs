@@ -22,7 +22,7 @@ namespace Assets.Scripts
             {
                 menuButtons.SetBool("Open", true);
             }
-            if (transform.position.x < 20)
+            if (transform.position.x < Limit)
                 transform.position += new Vector3(0.05f, 0, 0);
             else
             {

@@ -87,6 +87,8 @@ namespace Assets.Scripts
             _finished = true;
         }
 
+       
+
         //Set all variables to starting positions and start text coroutine
         public void OpenDialogue(string filepath)
         {
@@ -253,14 +255,21 @@ namespace Assets.Scripts
         //Speed up text or go to the next dialogue
         public void OnPointerDown(PointerEventData eventData)
         {
+           
             if (eventData.button == PointerEventData.InputButton.Right) return;
             if (!_speedUp)
             {
+             
                 _speedUp = true;
-                _arrow.SetBool("Open", false);
-                _letterPause /= 10f;
+                StopAllCoroutines();
+                if(_message!= null)
+                    _dialogue.text = _message.text.Substring(1, _message.text.Length-1);            
             }
-
+            else
+            {
+                _finished = true;
+            }
+           
 
             if (!_finished) return;
             if (_tooltip)
