@@ -78,16 +78,25 @@ namespace Assets.Scripts
         //Type text letter by letter
         private IEnumerator TypeText()
         {
-            if (_message == null) yield break;
+            if (_message == null || _finished) yield break;
             for (int i = 1; i < _message.text.Length; i++)
             {
-                    _dialogue.text += _message.text[i];
+                if (_message == null)  yield break;
+                _dialogue.text += _message.text[i];
                     yield return new WaitForSeconds(_letterPause * Time.deltaTime);
             }
             _finished = true;
         }
 
-       
+
+        //Type text letter by letter
+        private IEnumerator Wait(float time)
+        {
+            _finished = true;
+            yield return new WaitForSeconds(time);
+        }
+
+
 
         //Set all variables to starting positions and start text coroutine
         public void OpenDialogue(string filepath)
@@ -267,10 +276,8 @@ namespace Assets.Scripts
             }
             else
             {
-                _finished = true;
+                StartCoroutine(Wait(200));
             }
-           
-
             if (!_finished) return;
             if (_tooltip)
             {

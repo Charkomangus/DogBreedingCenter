@@ -495,9 +495,9 @@ namespace Assets.Scripts
             return _Intelligence ;
         }
 
-        public void SetIntelligence(int Intelligence)
+        public void SetIntelligence(int intelligence)
         {
-            _Intelligence  = Intelligence ;
+            _Intelligence  = intelligence ;
         }
 
         public string ReturnIntelligenceDescription()
