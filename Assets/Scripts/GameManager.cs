@@ -162,7 +162,7 @@ namespace Assets.Scripts
 
             if (_allButtonsinScene.Length > 0)
                 SetUpButtons();
-            SoundManager.StopAllPreviousMusic();
+            SoundManager.StopPreviousMusic();
             SetBounds();
             switch (CurrentLevel)
             {

@@ -65,10 +65,7 @@ namespace Assets.Scripts
             }
         }
 
-        public void StopAllPreviousMusic()
-        {
-            LOLSDK.Instance.StopSound(_currentMusic);
-        }
+       
 
         //Control Volume
         public void StopPreviousMusic(string filepath)

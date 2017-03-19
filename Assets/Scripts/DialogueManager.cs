@@ -150,6 +150,7 @@ namespace Assets.Scripts
             _message = LoadText(_filepath + _index);
 
             GameManager.Instance.SoundManager.PlaySoundEffect("Sound/tap.wav");
+
             if (_message == null)
             {
                 CloseDialogue();
@@ -276,7 +277,7 @@ namespace Assets.Scripts
             }
             else
             {
-                StartCoroutine(Wait(200));
+                StartCoroutine(Wait(500000 * Time.smoothDeltaTime));
             }
             if (!_finished) return;
             if (_tooltip)

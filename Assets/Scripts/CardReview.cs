@@ -16,31 +16,32 @@ namespace Assets.Scripts
         [SerializeField]private GameObject _chosenCard;
         [SerializeField]private Dog _dog;
         [SerializeField]private CardSlot _cardSlot;
-        private bool _set;
+        public bool _set;
         // Use this for initialization
         void Awake() {
             _cardSlot = GetComponentInChildren<CardSlot>();
         }
 	
-        // Update is called once per frame
-        void Update ()
+       
+
+
+        public void SetDog(GameObject dog)
         {
-            if (!_slot.Item) return;
-            if(!_set)
-                SetDog();
-
-        }
-
-
-        private void SetDog()
-        {
+            if (_slot.transform.childCount > 0)
+                for (int i = 0; i < _slot.transform.childCount; i++)
+                {
+                    _slot.transform.GetChild(i).GetComponent<Card>().ReturnToParent();
+                }
+            _set = true;
+            GetComponent<Animator>().SetBool("Open", true);
+            dog.transform.SetParent(_slot.transform);
             _chosenCard = _slot.Item;
             _dog = _chosenCard.GetComponent<Dog>();
             _stats.text = SetStatText();
             _family.text = SetFamily();
             _statsNumber.text = SetStatNumberText();
             _description.text = SetDescriptionText();
-            _set = true;
+           
         }
         private string SetFamily()
         {

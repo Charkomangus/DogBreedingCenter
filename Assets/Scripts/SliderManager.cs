@@ -50,7 +50,7 @@ namespace Assets.Scripts
         }
         public void RestartLevel()
         {
-            GameManager.Instance.SoundManager.StopAllPreviousMusic();
+            GameManager.Instance.SoundManager.StopPreviousMusic();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         public void ExitToMenu()

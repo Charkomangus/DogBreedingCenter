@@ -140,8 +140,8 @@ namespace Assets.Scripts
         {
             GameManager.Instance.SoundManager.PlaySoundEffect(Random.Range(0, 2) == 0? "Sound/Bark.wav": "Sound/doubleBark.wav");
             GameManager.Instance.SideBar.SetBool("Open", false);
-            GameManager.Instance.CardReview.GetComponent<Animator>().SetBool("Open", true);
-            transform.SetParent(GameManager.Instance.CardReview.ReturnCardSlot().transform);
+            GameManager.Instance.CardReview.SetDog(this.gameObject);
+          
             transform.localScale = Vector3.one;
         }
 
